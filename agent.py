@@ -24,15 +24,15 @@ class Agent(object):
         self.progress = _progress
 
 
-    def did_cooperate(self, threshold):
+    def did_cooperate(self, _threshold):
         # 
         # 
         # 
         number = random.randrange(0,100)
-        if (number / 100) < threshold:
+        if (number / 100) < _threshold:
             self.cooperate = False
             return False
-        elif (number / 100) >= threshold:
+        elif (number / 100) >= _threshold:
             return True
         else:
             pass

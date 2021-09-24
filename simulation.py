@@ -19,7 +19,7 @@ class Simulation(object):
 
         self.population = self._create_population(initial_infected)
 
-    def _create_population(self, initial_cooperation):
+    def create_population(self, _initial_cooperation):
         # 
         # 
         # 
@@ -42,7 +42,7 @@ class Simulation(object):
             self.next_agent_id += 1
         return population
 
-    def _simulation_should_continue(self):
+    def simulation_should_continue(self):
         # 
         # 
         # 
@@ -70,16 +70,16 @@ class Simulation(object):
         # 
         #
 
-    def interaction(self, agent, random_agent):
+    def interaction(self, _agent, _random_agent):
         # 
         # 
         #
         #
 
-        assert agent.cooperate == True
-        assert random_agent.cooperate == False
+        assert _agent.cooperate == True
+        assert _random_agent.cooperate == False
 
-    def _threshold(self):
+    def threshold(self):
         # 
         # 
         # 
