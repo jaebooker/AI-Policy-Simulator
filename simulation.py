@@ -70,13 +70,13 @@ class Simulation(object):
         # 
         #
 
-    def interaction(self, person, random_agent):
+    def interaction(self, agent, random_agent):
         # 
         # 
         #
         #
 
-        assert person.cooperate == True
+        assert agent.cooperate == True
         assert random_agent.cooperate == False
 
     def _threshold(self):
