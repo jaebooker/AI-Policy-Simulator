@@ -77,7 +77,7 @@ class Simulation(object):
         #
 
         assert person.cooperate == True
-        assert random_person.cooperate == False
+        assert random_agent.cooperate == False
 
     def _threshold(self):
         # 
