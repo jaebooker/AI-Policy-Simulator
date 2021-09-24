@@ -19,7 +19,7 @@ class Simulation(object):
 
         self.population = self._create_population(initial_infected)
 
-    def _create_population(self, initial_infected):
+    def _create_population(self, initial_cooperation):
         # 
         # 
         # 
