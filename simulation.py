@@ -10,6 +10,7 @@ class Simulation(object):
         self.next_agent_id = 0
         self.threshold = _threshold
         self.diffierent_init_progress = _diffierent_init_progress
+        self.ai_maturity = False
         self.file_name = "_simulation_pop_{}_th_{}_different_init_progress{}_cooperate_{}.txt".format(
             _agent_size, _threshold, _diffierent_init_progress, _initial_cooperation)
 
@@ -53,6 +54,9 @@ class Simulation(object):
         # 
         #     
         # 
+        if self.ai_maturity:
+            return False
+        return True
 
     def run(self):
         # 
@@ -75,6 +79,8 @@ class Simulation(object):
         # 
         #
         for agent in self.population:
+            if agent.total_progress >= 100:
+                self.ai_maturity = True
             agent.total_progress += agent.progress
             random_agent = random.randrange(0,len(self.population))
             if population[random_agent]._id != agent._id:
@@ -93,8 +99,12 @@ class Simulation(object):
             if (_agent.did_cooperate(_random_agent, self.threshold)) and (_random_agent.did_defect(_agent, self.threshold)):
                 _agent.cooperate = True
                 _random_agent.cooperate = True
+                _agent.progress += (_random_agent.progress - self.threshold)
+                _random_agent.progress += (_agent.progress - self.threshold)
         else:
-            _agent.did_defect(_random_agent, self-threshold)
+            if _agent.did_defect(_random_agent, self.threshold):
+                _random_agent.progress -= _agent.progress
+                _agent.progress += (self.threshold - _random_agent.progress)
 
     def threshold(self):
         # 
