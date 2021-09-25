@@ -22,17 +22,27 @@ class Agent(object):
         self._id = _id
         self.cooperate = _cooperate
         self.progress = _progress
+        self.defect = False
+        self.total_progress = _progress
 
 
-    def did_cooperate(self, _threshold):
+    def did_cooperate(self, _random_agent, _threshold):
         # 
         # 
         # 
-        number = random.randrange(0,100)
-        if (number / 100) < _threshold:
-            self.cooperate = False
+        if _random_agent.progress < (self.progress + _threshold):
             return False
-        elif (number / 100) >= _threshold:
+        elif _random_agent.progress >= (self.progress + _threshold):
             return True
-        else:
-            pass
+    
+    def did_defect(self, _random_agent, _threshold):
+        #
+        #
+        #
+        if (self.cooperate = True) and (_random_agent.cooperate = True):
+            if _random_agent.progress < (self.progress + _threshold):
+                self.defect = True
+                self.cooperate = False
+                return True
+            elif _random_agent.progress >= (self.progress + _threshold):
+                return False

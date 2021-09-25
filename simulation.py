@@ -10,8 +10,8 @@ class Simulation(object):
         self.next_agent_id = 0
         self.threshold = _threshold
         self.diffierent_init_progress = _diffierent_init_progress
-        self.file_name = "_simulation_pop_{}_th_{}_cooperate_{}.txt".format(
-            _agent_size, _threshold, _initial_cooperation)
+        self.file_name = "_simulation_pop_{}_th_{}_different_init_progress{}_cooperate_{}.txt".format(
+            _agent_size, _threshold, _diffierent_init_progress, _initial_cooperation)
 
         self.logger = Logger(self.file_name)
 
@@ -74,6 +74,11 @@ class Simulation(object):
         #  
         # 
         #
+        for agent in self.population:
+            agent.total_progress += agent.progress
+            random_agent = random.randrange(0,len(self.population))
+            if population[random_agent]._id != agent._id:
+                interaction(agent, random_agent)
 
     def interaction(self, _agent, _random_agent):
         # 
@@ -81,8 +86,15 @@ class Simulation(object):
         #
         #
 
-        assert _agent.cooperate == True
-        assert _random_agent.cooperate == False
+        assert _agent.defect == False
+        assert _random_agent.defect == False
+
+        if (_agent.cooperate == False) or (_random_agent.cooperate == False):
+            if (_agent.did_cooperate(_random_agent, self.threshold)) and (_random_agent.did_defect(_agent, self.threshold)):
+                _agent.cooperate = True
+                _random_agent.cooperate = True
+        else:
+            _agent.did_defect(_random_agent, self-threshold)
 
     def threshold(self):
         # 
