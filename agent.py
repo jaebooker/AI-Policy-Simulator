@@ -39,7 +39,7 @@ class Agent(object):
         #
         #
         #
-        if (self.cooperate = True) and (_random_agent.cooperate = True):
+        if (self.cooperate) and (_random_agent.cooperate):
             if _random_agent.progress < (self.progress + _threshold):
                 self.defect = True
                 self.cooperate = False

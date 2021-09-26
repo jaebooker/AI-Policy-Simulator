@@ -1,6 +1,6 @@
 import random, sys
 random.seed(42)
-from logger import *
+# from logger import *
 from agent import *
 class Simulation(object):
 
@@ -11,15 +11,15 @@ class Simulation(object):
         self.threshold = _threshold
         self.diffierent_init_progress = _diffierent_init_progress
         self.ai_maturity = False
-        self.file_name = "_simulation_pop_{}_th_{}_different_init_progress{}_cooperate_{}.txt".format(
-            _agent_size, _threshold, _diffierent_init_progress, _initial_cooperation)
+        # self.file_name = "_simulation_pop_{}_th_{}_different_init_progress{}_cooperate_{}.txt".format(
+        #     _agent_size, _threshold, _diffierent_init_progress, _initial_cooperation)
 
-        self.logger = Logger(self.file_name)
+        # self.logger = Logger(self.file_name)
 
-        self.logger.write_metadata(self.agent_size, self.threshold)
+        # self.logger.write_metadata(self.agent_size, self.threshold)
         self.new_interactions = []
 
-        self.population = self._create_population(initial_infected)
+        self.population = self.create_population(agent_size)
 
     def create_population(self, _initial_cooperation):
         # 
@@ -38,6 +38,7 @@ class Simulation(object):
                     cooperate_count += 1
                 else:
                     agent = Agent(self.next_agent_id, False, number / 100)
+                    population.append(agent)
             else:
                 if cooperate_count !=  _initial_cooperation:
                     agent = Agent(self.next_agent_id, True)
@@ -45,6 +46,7 @@ class Simulation(object):
                     cooperate_count += 1
                 else:
                     agent = Agent(self.next_agent_id, False)
+                    population.append(agent)
             self.next_agent_id += 1
         return population
 
@@ -65,12 +67,12 @@ class Simulation(object):
         # 
 
         time_step_counter = 0
-        should_continue = self._simulation_should_continue()
+        should_continue = self.simulation_should_continue()
         while should_continue:
             self.time_step()
             time_step_counter += 1
-            self.logger.log_time_step(time_step_counter)
-            should_continue = self._simulation_should_continue()
+            # self.logger.log_time_step(time_step_counter)
+            should_continue = self.simulation_should_continue()
         print("It is over, after " + str(time_step_counter) + " time steps.")
 
     def time_step(self):
@@ -83,8 +85,8 @@ class Simulation(object):
                 self.ai_maturity = True
             agent.total_progress += agent.progress
             random_agent = random.randrange(0,len(self.population))
-            if population[random_agent]._id != agent._id:
-                interaction(agent, random_agent)
+            if self.population[random_agent]._id != agent._id:
+                self.interaction(agent, self.population[random_agent])
 
     def interaction(self, _agent, _random_agent):
         # 
@@ -92,19 +94,18 @@ class Simulation(object):
         #
         #
 
-        assert _agent.defect == False
-        assert _random_agent.defect == False
+        if (_agent.defect == False) and (_random_agent.defect == False):
 
-        if (_agent.cooperate == False) or (_random_agent.cooperate == False):
-            if (_agent.did_cooperate(_random_agent, self.threshold)) and (_random_agent.did_defect(_agent, self.threshold)):
-                _agent.cooperate = True
-                _random_agent.cooperate = True
-                _agent.progress += (_random_agent.progress - self.threshold)
-                _random_agent.progress += (_agent.progress - self.threshold)
-        else:
-            if _agent.did_defect(_random_agent, self.threshold):
-                _random_agent.progress -= _agent.progress
-                _agent.progress += (self.threshold - _random_agent.progress)
+            if (_agent.cooperate == False) or (_random_agent.cooperate == False):
+                if (_agent.did_cooperate(_random_agent, self.threshold)) and (_random_agent.did_defect(_agent, self.threshold)):
+                    _agent.cooperate = True
+                    _random_agent.cooperate = True
+                    _agent.progress += (_random_agent.progress - self.threshold)
+                    _random_agent.progress += (_agent.progress - self.threshold)
+            else:
+                if _agent.did_defect(_random_agent, self.threshold):
+                    _random_agent.progress -= _agent.progress
+                    _agent.progress += (self.threshold - _random_agent.progress)
 
     def threshold(self):
         # 
