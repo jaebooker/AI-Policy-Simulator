@@ -16,7 +16,7 @@ class Agent(object):
         explanation
     '''
 
-    def __init__(self, _id, _cooperate, _progress=1):
+    def __init__(self, _id, _cooperate, _progress):
         # 
         # to set the correct values for the following attributes.
         self._id = _id
