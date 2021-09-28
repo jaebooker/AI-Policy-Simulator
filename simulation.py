@@ -118,9 +118,6 @@ if __name__ == "__main__":
     agent_size = int(params[0])
     threshold = float(params[1])
     different_init_progress = bool(params[2])
-    if len(params) == 3:
-        initial_cooperation = int(params[3])
-    else:
-        initial_cooperation = 1
+    initial_cooperation = int(params[3])
     simulation = Simulation(agent_size, threshold, different_init_progress, initial_cooperation)
     simulation.run()
