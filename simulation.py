@@ -4,13 +4,15 @@ random.seed(42)
 from agent import *
 class Simulation(object):
 
-    def __init__(self, _agent_size, _threshold, _different_init_progress, _initial_cooperation):
+    def __init__(self, _agent_size, _threshold, _different_init_progress, _initial_cooperation, _initial_spies, _initial_imposters):
         self.agent_size = _agent_size
         self.population = []
         self.next_agent_id = 0
         self.threshold = _threshold
         self.different_init_progress = _different_init_progress
         self.initial_cooperation = _initial_cooperation
+        self.initial_spies = _initial_spies
+        self.initial_imposters = _initial_imposters
         self.ai_maturity = False
         self.file_name = "_simulation_pop_{}_th_{}_different_init_progress{}_cooperate_{}.txt".format(
             _agent_size, _threshold, _different_init_progress, _initial_cooperation)
@@ -119,5 +121,7 @@ if __name__ == "__main__":
     threshold = float(params[1])
     different_init_progress = bool(params[2])
     initial_cooperation = int(params[3])
-    simulation = Simulation(agent_size, threshold, different_init_progress, initial_cooperation)
+    initial_spies = int(params[4])
+    initial_imposters = int(params[5])
+    simulation = Simulation(agent_size, threshold, different_init_progress, initial_cooperation, initial_spies, initial_imposters)
     simulation.run()
