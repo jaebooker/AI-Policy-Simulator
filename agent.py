@@ -16,7 +16,7 @@ class Agent(object):
         explanation
     '''
 
-    def __init__(self, _id, _cooperate, _progress):
+    def __init__(self, _id, _cooperate, _progress, _spy, _imposter):
         # 
         # to set the correct values for the following attributes.
         self._id = _id
@@ -24,11 +24,16 @@ class Agent(object):
         self.progress = _progress
         self.defect = False
         self.total_progress = _progress
+        self.spy = _spy
+        self.imposter = _imposter
 
 
     def did_cooperate(self, _random_agent, _threshold):
         # checks if it is in agent's interest to cooperate
         # checks if progress gained by cooperating is greater than loss of progress from complying to AI Safety measures
+
+        if self.imposter:
+            return True
 
         if _random_agent.progress < (self.progress + _threshold):
             return False
@@ -46,3 +51,9 @@ class Agent(object):
                 return True
             elif _random_agent.progress >= (self.progress + _threshold):
                 return False
+
+    def spy(self, random_agent):
+        pass
+
+    def did_get_caught(self):
+        pass

@@ -36,19 +36,19 @@ class Simulation(object):
             if self.different_init_progress:
                 number = random.randrange(0,100)
                 if cooperate_count !=  self.initial_cooperation:
-                    agent = Agent(self.next_agent_id, True, number / 100)
+                    agent = Agent(self.next_agent_id, True, number / 100, False, False)
                     population.append(agent)
                     cooperate_count += 1
                 else:
-                    agent = Agent(self.next_agent_id, False, number / 100)
+                    agent = Agent(self.next_agent_id, False, number / 100, False, False)
                     population.append(agent)
             else:
                 if cooperate_count !=  self.initial_cooperation:
-                    agent = Agent(self.next_agent_id, True)
+                    agent = Agent(self.next_agent_id, True, 1, False, False)
                     population.append(agent)
                     cooperate_count += 1
                 else:
-                    agent = Agent(self.next_agent_id, False)
+                    agent = Agent(self.next_agent_id, False, 1, False, False)
                     population.append(agent)
             self.next_agent_id += 1
         return population
@@ -93,13 +93,18 @@ class Simulation(object):
         # if only one agent is currently cooperate, checks to see if other agent will cooperate
         # if true, adjusts progress levels
         # if both agents are cooperating, checks if one agent will defect, and adjusts progress
+        if _agent.spy:
+            pass
 
-        if (_agent.defect == False) and (_random_agent.defect == False):
-
+        elif (_agent.defect == False) and (_random_agent.defect == False):
+            if _agent.imposter:
+                _agent.did_get_caught()
             if (_agent.cooperate == False) and (_random_agent.cooperate == True):
                 if _agent.did_cooperate(_random_agent, self.threshold):
                     _agent.cooperate = True
                     _random_agent.cooperate = True
+                    if _agent.imposter:
+                        _agent.progress += (_random_agent.progress)
                     _agent.progress += (_random_agent.progress - self.threshold)
                     _random_agent.progress += (_agent.progress)
                 self.logger.log_interaction(_agent, _random_agent, "cooperate", _agent.cooperate)
