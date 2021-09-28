@@ -97,12 +97,12 @@ class Simulation(object):
 
         if (_agent.defect == False) and (_random_agent.defect == False):
 
-            if (_agent.cooperate == False) or (_random_agent.cooperate == False):
-                if (_agent.did_cooperate(_random_agent, self.threshold)) and (_random_agent.did_defect(_agent, self.threshold)):
+            if (_agent.cooperate == False) and (_random_agent.cooperate == True):
+                if _agent.did_cooperate(_random_agent, self.threshold):
                     _agent.cooperate = True
                     _random_agent.cooperate = True
                     _agent.progress += (_random_agent.progress - self.threshold)
-                    _random_agent.progress += (_agent.progress - self.threshold)
+                    _random_agent.progress += (_agent.progress)
                     print("cooperate")
             if (_agent.cooperate == True) and (_random_agent.cooperate == True):
                 if _agent.did_defect(_random_agent, self.threshold):
