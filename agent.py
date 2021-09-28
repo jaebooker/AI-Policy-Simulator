@@ -53,7 +53,14 @@ class Agent(object):
                 return False
 
     def spy(self, random_agent):
-        pass
+        odds = random.randrange(0,100)
+        if odds >= 80:
+            return True
+        return False
 
     def did_get_caught(self):
-        pass
+        odds = random.randrange(0,100)
+        if odds >= 80:
+            self.defect = True
+            self.imposter = False
+            self.spy = False

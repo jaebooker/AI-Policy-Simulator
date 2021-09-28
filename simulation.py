@@ -94,7 +94,8 @@ class Simulation(object):
         # if true, adjusts progress levels
         # if both agents are cooperating, checks if one agent will defect, and adjusts progress
         if _agent.spy:
-            pass
+            self.spy(_agent, _random_agent)
+            _agent.did_get_caught()
 
         elif (_agent.defect == False) and (_random_agent.defect == False):
             if _agent.imposter:
@@ -119,6 +120,11 @@ class Simulation(object):
         # 
         # 
         pass
+
+    def spy(self, _agent, _random_agent):
+        if _agent.spy(_random_agent):
+            info_obtained = random.randrange(0,100)
+            _agent.progress += (_random_agent.progress ** (info_obtained // 100))
 
 if __name__ == "__main__":
     params = sys.argv[1:]
