@@ -23,10 +23,10 @@ class Simulation(object):
         self.population = self.create_population(agent_size)
 
     def create_population(self, agent_size):
-        # 
-        # 
-        # 
-        # 
+        # creates an array of all agents
+        # creates agent models
+        # assigns pre-defined number of cooperating agents
+        # gives ranomized progress states, if different initial levels of progress
 
         population = []
         cooperate_count = 0
@@ -52,20 +52,16 @@ class Simulation(object):
         return population
 
     def simulation_should_continue(self):
-        # AI has not reached full maturity
-        # 
-        # 
-        #     
-        # 
+        # Checks if AI has reached AGI level
+        # If not, continues to run simulation
         if self.ai_maturity:
             return False
         return True
 
     def run(self):
-        # 
-        #
-        # 
-        # 
+        # sets timesteps
+        # checks if simulation should continue
+        # runs iteration
 
         time_step_counter = 0
         should_continue = self.simulation_should_continue()
@@ -77,10 +73,10 @@ class Simulation(object):
         print("It is over, after " + str(time_step_counter) + " time steps.")
 
     def time_step(self):
-        # 
-        #  
-        # 
-        #
+        # checks if AI has reached AGI level
+        # iterates through agents
+        # gives random interaction between agents
+
         for agent in self.population:
             if agent.total_progress >= 100:
                 self.ai_maturity = True
@@ -90,10 +86,11 @@ class Simulation(object):
                 self.interaction(agent, self.population[random_agent])
 
     def interaction(self, _agent, _random_agent):
-        # 
-        # 
-        #
-        #
+        # checks if either agent has yet defected
+        # checks if both agents are already cooperating
+        # if only one agent is currently cooperate, checks to see if other agent will cooperate
+        # if true, adjusts progress levels
+        # if both agents are cooperating, checks if one agent will defect, and adjusts progress
 
         if (_agent.defect == False) and (_random_agent.defect == False):
 
