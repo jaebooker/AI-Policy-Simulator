@@ -1,26 +1,226 @@
 Agents: 50	 Threshold: 0.1	 Different Initial Progress: True	 Initial Cooperation: 10
+Spy: <agent.Agent object at 0x10792e710>	 Spied on: <agent.Agent object at 0x10792e588>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7b8>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792e9e8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e828>	 Spied on: <agent.Agent object at 0x10792e9b0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e860>	 Spied on: <agent.Agent object at 0x10792e898>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e860>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e898>	 Spied on: <agent.Agent object at 0x10792e588>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e8d0>	 Spied on: <agent.Agent object at 0x10792e710>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e940>	 Spied on: <agent.Agent object at 0x10792ea20>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e978>	 Spied on: <agent.Agent object at 0x10792ee80>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e9b0>	 Spied on: <agent.Agent object at 0x10792ee48>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e9e8>	 Spied on: <agent.Agent object at 0x10792ef98>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea20>	 Spied on: <agent.Agent object at 0x1078f8fd0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea58>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792ecc0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792ecc0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792edd8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792edd8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792ef28>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792e860>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792ecf8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec50>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec88>	 Spied on: <agent.Agent object at 0x10792e550>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecc0>	 Spied on: <agent.Agent object at 0x10792eda0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ea20>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed68>	 Spied on: <agent.Agent object at 0x10792eb38>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eda0>	 Spied on: <agent.Agent object at 0x10792ec88>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792edd8>	 Spied on: <agent.Agent object at 0x10792eef0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee10>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ee10>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792edd8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee80>	 Spied on: <agent.Agent object at 0x10792e8d0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eeb8>	 Spied on: <agent.Agent object at 0x10792eb38>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ef28>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ef60>	 Spied on: <agent.Agent object at 0x10792e748>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ef98>	 Spied on: <agent.Agent object at 0x10792eda0>	 Success False	 Amount: 0 
 Time Steps: 1
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792e908>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792eef0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792e6a0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792e6a0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e978>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e9e8>	 Spied on: <agent.Agent object at 0x10792e7b8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea20>	 Spied on: <agent.Agent object at 0x10792eef0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ea20>	 Spied on: <agent.Agent object at 0x10792eef0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea58>	 Spied on: <agent.Agent object at 0x10792e908>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792edd8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792ec18>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e978>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792ec88>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eeb8>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eeb8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e588>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec88>	 Spied on: <agent.Agent object at 0x10792ebe0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e6a0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e6a0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed68>	 Spied on: <agent.Agent object at 0x10792eb70>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792e630>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792e630>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee80>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eef0>	 Spied on: <agent.Agent object at 0x10792e550>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eef0>	 Spied on: <agent.Agent object at 0x10792e550>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ef60>	 Spied on: <agent.Agent object at 0x10792e550>	 Success False	 Amount: 0 
 Time Steps: 2
 Agent 1: 0	 Agent 2: 6	 defect : True 
 Agent 1: 7	 Agent 2: 4	 defect : False 
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792ef60>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x1078ff198>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e978>	 Spied on: <agent.Agent object at 0x10792e8d0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e8d0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792ecf8>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792ecf8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792ef28>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792e550>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792ebe0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792e550>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e748>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec88>	 Spied on: <agent.Agent object at 0x10792ee48>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792ecc0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed68>	 Spied on: <agent.Agent object at 0x1078f8fd0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792ecc0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee80>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
 Time Steps: 3
 Agent 1: 6	 Agent 2: 4	 defect : False 
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792e908>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792e908>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792ef28>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792e7b8>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792e7b8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792ee48>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792ee48>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e5f8>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e5f8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec88>	 Spied on: <agent.Agent object at 0x1078ff198>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792eda0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ef28>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed68>	 Spied on: <agent.Agent object at 0x10792eeb8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792ee80>	 Success False	 Amount: 0 
 Time Steps: 4
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792ef98>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792ed68>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792ed68>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792e748>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792ee10>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792ee10>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e9b0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb00>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e780>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb70>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eba8>	 Spied on: <agent.Agent object at 0x10792e898>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792ea58>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792ea58>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792e748>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x1078f8fd0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed68>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792ebe0>	 Success False	 Amount: 0 
 Time Steps: 5
+Spy: <agent.Agent object at 0x10792e748>	 Spied on: <agent.Agent object at 0x10792ed68>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792e668>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792e668>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792ee10>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792e6a0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792ecc0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792ec88>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e7b8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792e940>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792eb00>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792eb00>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792ee10>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ebe0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ebe0>	 Success False	 Amount: 0 
 Time Steps: 6
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792ea58>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e7f0>	 Spied on: <agent.Agent object at 0x10792ee80>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792e908>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792eb38>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792ee10>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e940>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e940>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e710>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e710>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ecf8>	 Spied on: <agent.Agent object at 0x10792eda0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ef98>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792e588>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x10792e588>	 Success False	 Amount: 0 
 Time Steps: 7
 Agent 1: 7	 Agent 2: 4	 defect : False 
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792ea90>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792ef60>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792ec50>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e978>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792e978>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ed68>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ee48>	 Spied on: <agent.Agent object at 0x1078ff278>	 Success False	 Amount: 0 
 Time Steps: 8
+Spy: <agent.Agent object at 0x10792e780>	 Spied on: <agent.Agent object at 0x10792eb70>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x1078ff278>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792e668>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792e860>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792e860>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ec18>	 Spied on: <agent.Agent object at 0x10792ed30>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e908>	 Success False	 Amount: 0 
 Time Steps: 9
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792eb38>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792eb38>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e748>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792eac8>	 Spied on: <agent.Agent object at 0x10792e748>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792eb38>	 Spied on: <agent.Agent object at 0x10792ed68>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eac8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e828>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e828>	 Success False	 Amount: 0 
 Time Steps: 10
+Spy: <agent.Agent object at 0x10792ea90>	 Spied on: <agent.Agent object at 0x10792e7f0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eb70>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e9b0>	 Success True	 Amount: 1.0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e9b0>	 Success False	 Amount: 0 
 Time Steps: 11
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792ef60>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792eb00>	 Success False	 Amount: 0 
 Time Steps: 12
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eda0>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ec88>	 Success False	 Amount: 0 
 Time Steps: 13
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792ee80>	 Success False	 Amount: 0 
 Time Steps: 14
+Spy: <agent.Agent object at 0x10792ebe0>	 Spied on: <agent.Agent object at 0x10792eba8>	 Success False	 Amount: 0 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e5f8>	 Success False	 Amount: 0 
 Time Steps: 15
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792eeb8>	 Success False	 Amount: 0 
 Time Steps: 16
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792ea90>	 Success False	 Amount: 0 
 Time Steps: 17
 Agent 1: 5	 Agent 2: 6	 defect : True 
+Spy: <agent.Agent object at 0x10792ed30>	 Spied on: <agent.Agent object at 0x10792e8d0>	 Success False	 Amount: 0 
 Time Steps: 18
 Time Steps: 19
 Time Steps: 20

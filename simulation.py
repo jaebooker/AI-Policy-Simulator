@@ -133,6 +133,8 @@ class Simulation(object):
         if _agent.spying(_random_agent):
             info_obtained = random.randrange(0,100)
             _agent.progress += (_random_agent.progress ** (info_obtained // 100))
+            self.logger.log_spy(_agent, _random_agent, True, _random_agent.progress ** (info_obtained // 100))
+        self.logger.log_spy(_agent, _random_agent, False, 0)
 
 if __name__ == "__main__":
     params = sys.argv[1:]
