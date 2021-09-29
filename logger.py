@@ -43,6 +43,8 @@ class Logger(object):
         f.closed
 
     def log_spy(self, _agent1, _agent2, _success, _amount):
+        #logs spy activity
+
         with open(self.file_name, "a") as f:
             f.write("Spy: {}\t Spied on: {}\t Success {}\t Amount: {} \n".format(_agent1._id, _agent2._id, _success, _amount))
         f.closed
