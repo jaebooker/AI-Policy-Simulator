@@ -48,3 +48,8 @@ class Logger(object):
         with open(self.file_name, "a") as f:
             f.write("Spy: {}\t Spied on: {}\t Success {}\t Amount: {} \n".format(_agent1._id, _agent2._id, _success, _amount))
         f.closed
+
+    def got_caught(self, _agent, _type):
+        with open(self.file_name, "a") as f:
+            f.write("Agent: {}\t Type: {}\t got caught\n".format(_agent._id, _type))
+        f.closed

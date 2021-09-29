@@ -64,3 +64,5 @@ class Agent(object):
             self.defect = True
             self.imposter = False
             self.spy = False
+            return True
+        return False

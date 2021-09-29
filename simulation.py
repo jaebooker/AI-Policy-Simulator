@@ -103,11 +103,13 @@ class Simulation(object):
         # if both agents are cooperating, checks if one agent will defect, and adjusts progress
         if _agent.spy:
             self.spy(_agent, _random_agent)
-            _agent.did_get_caught()
+            if _agent.did_get_caught():
+                self.logger.got_caught(_agent, "Spy")
 
         elif (_agent.defect == False) and (_random_agent.defect == False):
             if _agent.imposter:
-                _agent.did_get_caught()
+                if _agent.did_get_caught():
+                    self.logger.got_caught(_agent, "Imposter")
             if (_agent.cooperate == False) and (_random_agent.cooperate == True):
                 if _agent.did_cooperate(_random_agent, self.threshold):
                     _agent.cooperate = True
