@@ -32,15 +32,23 @@ class Simulation(object):
 
         population = []
         cooperate_count = 0
+        spy_count = 0
+        imposter_count = 0
         while len(population) != agent_size:
             if self.different_init_progress:
                 number = random.randrange(0,100)
                 if cooperate_count !=  self.initial_cooperation:
-                    agent = Agent(self.next_agent_id, True, number / 100, False, False)
+                    if imposter_count != self.initial_imposters:
+                        agent = Agent(self.next_agent_id, True, number / 100, False, True)
+                    else:
+                        agent = Agent(self.next_agent_id, True, number / 100, False, False)
                     population.append(agent)
                     cooperate_count += 1
                 else:
-                    agent = Agent(self.next_agent_id, False, number / 100, False, False)
+                    if spy_count != initial_spies:
+                        agent = Agent(self.next_agent_id, False, number / 100, True, False)
+                    else:
+                        agent = Agent(self.next_agent_id, False, number / 100, False, False)
                     population.append(agent)
             else:
                 if cooperate_count !=  self.initial_cooperation:
@@ -122,7 +130,7 @@ class Simulation(object):
         pass
 
     def spy(self, _agent, _random_agent):
-        if _agent.spy(_random_agent):
+        if _agent.spying(_random_agent):
             info_obtained = random.randrange(0,100)
             _agent.progress += (_random_agent.progress ** (info_obtained // 100))
 

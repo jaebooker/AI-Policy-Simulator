@@ -1,129 +1,31 @@
 Agents: 50	 Threshold: 0.1	 Different Initial Progress: True	 Initial Cooperation: 10
-Agent 1: 4	 Agent 2: 2	 defect : True 
-Agent 1: 8	 Agent 2: 7	 defect : True 
-Agent 1: 10	 Agent 2: 5	 cooperate : False 
-Agent 1: 20	 Agent 2: 2	 cooperate : False 
-Agent 1: 25	 Agent 2: 5	 cooperate : False 
-Agent 1: 27	 Agent 2: 6	 cooperate : False 
 Time Steps: 1
-Agent 1: 11	 Agent 2: 3	 cooperate : False 
-Agent 1: 13	 Agent 2: 2	 cooperate : False 
-Agent 1: 28	 Agent 2: 9	 cooperate : False 
-Agent 1: 46	 Agent 2: 5	 cooperate : True 
-Agent 1: 46	 Agent 2: 5	 defect : False 
-Agent 1: 48	 Agent 2: 3	 cooperate : True 
-Agent 1: 48	 Agent 2: 3	 defect : False 
-Agent 1: 49	 Agent 2: 7	 cooperate : False 
 Time Steps: 2
-Agent 1: 0	 Agent 2: 9	 defect : True 
-Agent 1: 16	 Agent 2: 46	 cooperate : True 
-Agent 1: 16	 Agent 2: 46	 defect : False 
-Agent 1: 17	 Agent 2: 7	 cooperate : False 
-Agent 1: 20	 Agent 2: 48	 cooperate : True 
-Agent 1: 20	 Agent 2: 48	 defect : False 
-Agent 1: 25	 Agent 2: 7	 cooperate : False 
-Agent 1: 31	 Agent 2: 46	 cooperate : True 
-Agent 1: 31	 Agent 2: 46	 defect : False 
-Agent 1: 32	 Agent 2: 46	 cooperate : True 
-Agent 1: 32	 Agent 2: 46	 defect : False 
-Agent 1: 33	 Agent 2: 16	 cooperate : False 
-Agent 1: 34	 Agent 2: 32	 cooperate : True 
-Agent 1: 34	 Agent 2: 32	 defect : False 
-Agent 1: 35	 Agent 2: 48	 cooperate : True 
-Agent 1: 35	 Agent 2: 48	 defect : False 
-Agent 1: 37	 Agent 2: 32	 cooperate : True 
-Agent 1: 37	 Agent 2: 32	 defect : False 
-Agent 1: 38	 Agent 2: 6	 cooperate : False 
-Agent 1: 42	 Agent 2: 32	 cooperate : True 
-Agent 1: 42	 Agent 2: 32	 defect : False 
-Agent 1: 45	 Agent 2: 9	 cooperate : False 
-Agent 1: 47	 Agent 2: 48	 cooperate : True 
-Agent 1: 47	 Agent 2: 48	 defect : False 
-Agent 1: 49	 Agent 2: 34	 cooperate : True 
-Agent 1: 49	 Agent 2: 34	 defect : False 
+Agent 1: 0	 Agent 2: 6	 defect : True 
+Agent 1: 7	 Agent 2: 4	 defect : False 
 Time Steps: 3
-Agent 1: 5	 Agent 2: 31	 defect : False 
-Agent 1: 6	 Agent 2: 1	 defect : True 
-Agent 1: 11	 Agent 2: 3	 cooperate : True 
-Agent 1: 11	 Agent 2: 3	 defect : False 
-Agent 1: 14	 Agent 2: 5	 cooperate : False 
-Agent 1: 15	 Agent 2: 5	 cooperate : True 
-Agent 1: 15	 Agent 2: 5	 defect : False 
-Agent 1: 16	 Agent 2: 46	 defect : False 
-Agent 1: 17	 Agent 2: 31	 cooperate : True 
-Agent 1: 17	 Agent 2: 31	 defect : False 
-Agent 1: 19	 Agent 2: 48	 cooperate : True 
-Agent 1: 19	 Agent 2: 48	 defect : False 
-Agent 1: 20	 Agent 2: 34	 defect : False 
-Agent 1: 21	 Agent 2: 49	 cooperate : True 
-Agent 1: 21	 Agent 2: 49	 defect : False 
-Agent 1: 24	 Agent 2: 42	 cooperate : True 
-Agent 1: 24	 Agent 2: 42	 defect : False 
-Agent 1: 26	 Agent 2: 35	 cooperate : True 
-Agent 1: 26	 Agent 2: 35	 defect : False 
-Agent 1: 28	 Agent 2: 16	 cooperate : False 
-Agent 1: 33	 Agent 2: 34	 cooperate : True 
-Agent 1: 33	 Agent 2: 34	 defect : False 
-Agent 1: 34	 Agent 2: 48	 defect : False 
-Agent 1: 35	 Agent 2: 46	 defect : True 
-Agent 1: 39	 Agent 2: 19	 cooperate : True 
-Agent 1: 39	 Agent 2: 19	 defect : False 
-Agent 1: 41	 Agent 2: 42	 cooperate : True 
-Agent 1: 41	 Agent 2: 42	 defect : False 
-Agent 1: 42	 Agent 2: 41	 defect : True 
-Agent 1: 45	 Agent 2: 33	 cooperate : True 
-Agent 1: 45	 Agent 2: 33	 defect : False 
-Agent 1: 47	 Agent 2: 7	 defect : True 
-Agent 1: 48	 Agent 2: 15	 defect : True 
+Agent 1: 6	 Agent 2: 4	 defect : False 
 Time Steps: 4
-Agent 1: 1	 Agent 2: 21	 defect : False 
-Agent 1: 2	 Agent 2: 1	 defect : False 
-Agent 1: 3	 Agent 2: 37	 defect : True 
-Agent 1: 10	 Agent 2: 45	 cooperate : True 
-Agent 1: 10	 Agent 2: 45	 defect : False 
-Agent 1: 15	 Agent 2: 2	 defect : False 
-Agent 1: 16	 Agent 2: 21	 defect : False 
-Agent 1: 18	 Agent 2: 32	 cooperate : True 
-Agent 1: 18	 Agent 2: 32	 defect : False 
-Agent 1: 19	 Agent 2: 15	 defect : True 
-Agent 1: 20	 Agent 2: 17	 defect : True 
-Agent 1: 22	 Agent 2: 31	 cooperate : True 
-Agent 1: 22	 Agent 2: 31	 defect : False 
-Agent 1: 24	 Agent 2: 34	 defect : False 
-Agent 1: 26	 Agent 2: 46	 defect : True 
-Agent 1: 30	 Agent 2: 15	 cooperate : False 
-Agent 1: 38	 Agent 2: 22	 cooperate : True 
-Agent 1: 38	 Agent 2: 22	 defect : False 
-Agent 1: 45	 Agent 2: 41	 defect : True 
-Agent 1: 46	 Agent 2: 41	 defect : True 
 Time Steps: 5
-Agent 1: 1	 Agent 2: 21	 defect : False 
-Agent 1: 10	 Agent 2: 11	 defect : True 
-Agent 1: 11	 Agent 2: 17	 defect : False 
-Agent 1: 13	 Agent 2: 15	 cooperate : False 
-Agent 1: 22	 Agent 2: 5	 defect : True 
-Agent 1: 24	 Agent 2: 15	 defect : True 
-Agent 1: 27	 Agent 2: 31	 cooperate : True 
-Agent 1: 27	 Agent 2: 31	 defect : False 
-Agent 1: 36	 Agent 2: 16	 cooperate : False 
-Agent 1: 38	 Agent 2: 18	 defect : False 
-Agent 1: 39	 Agent 2: 27	 defect : True 
 Time Steps: 6
-Agent 1: 1	 Agent 2: 37	 defect : True 
-Agent 1: 9	 Agent 2: 37	 defect : True 
-Agent 1: 11	 Agent 2: 32	 defect : False 
-Agent 1: 12	 Agent 2: 33	 cooperate : True 
-Agent 1: 12	 Agent 2: 33	 defect : False 
-Agent 1: 15	 Agent 2: 32	 defect : False 
-Agent 1: 16	 Agent 2: 5	 defect : True 
-Agent 1: 17	 Agent 2: 11	 defect : True 
-Agent 1: 27	 Agent 2: 37	 defect : False 
-Agent 1: 28	 Agent 2: 38	 cooperate : True 
-Agent 1: 28	 Agent 2: 38	 defect : False 
-Agent 1: 29	 Agent 2: 2	 cooperate : False 
-Agent 1: 31	 Agent 2: 5	 defect : True 
-Agent 1: 34	 Agent 2: 37	 defect : True 
-Agent 1: 36	 Agent 2: 33	 cooperate : True 
-Agent 1: 36	 Agent 2: 33	 defect : False 
-Agent 1: 43	 Agent 2: 15	 cooperate : False 
 Time Steps: 7
+Agent 1: 7	 Agent 2: 4	 defect : False 
+Time Steps: 8
+Time Steps: 9
+Time Steps: 10
+Time Steps: 11
+Time Steps: 12
+Time Steps: 13
+Time Steps: 14
+Time Steps: 15
+Time Steps: 16
+Time Steps: 17
+Agent 1: 5	 Agent 2: 6	 defect : True 
+Time Steps: 18
+Time Steps: 19
+Time Steps: 20
+Time Steps: 21
+Agent 1: 1	 Agent 2: 6	 defect : True 
+Time Steps: 22
+Time Steps: 23
+Time Steps: 24

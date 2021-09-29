@@ -52,7 +52,7 @@ class Agent(object):
             elif _random_agent.progress >= (self.progress + _threshold):
                 return False
 
-    def spy(self, random_agent):
+    def spying(self, random_agent):
         odds = random.randrange(0,100)
         if odds >= 80:
             return True
