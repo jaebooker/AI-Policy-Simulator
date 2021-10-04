@@ -1,6 +1,6 @@
 import random, sys
 random.seed(42)
-# from logger import *
+from logger import *
 from agent import *
 class Simulation(object):
 
