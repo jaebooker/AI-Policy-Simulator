@@ -2,7 +2,7 @@ class Cooperative(object):
     '''
     '''
 
-    def __init__(self):
+    def __init__(self, _init_progress):
         # 
         # 
-        self.init_progress = 1
+        self.init_progress = _init_progress
