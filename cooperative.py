@@ -1,3 +1,5 @@
+from simulation import *
+
 class Cooperative(object):
     '''
     '''

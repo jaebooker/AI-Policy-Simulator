@@ -2,6 +2,7 @@ import random, sys
 random.seed(42)
 from logger import *
 from agent import *
+from cooperative import *
 class Simulation(object):
 
     def __init__(self, _agent_size, _threshold, _different_init_progress, _initial_cooperation, _initial_spies, _initial_imposters):

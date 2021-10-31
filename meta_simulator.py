@@ -1,3 +1,5 @@
+from simulation import *
+
 class Meta_Simulator(object):
     '''
     '''
