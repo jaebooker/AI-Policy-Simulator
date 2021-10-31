@@ -1,4 +1,5 @@
 from simulation import *
+from logger import *
 
 class Meta_Simulator(object):
     '''
