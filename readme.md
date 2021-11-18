@@ -1,5 +1,4 @@
-Research question: What are the probabilities governments will
-> coordinate vs. compete when developing strong artificial intelligence?
+Research question: What are the probabilities governments will coordinate vs. compete when developing strong artificial intelligence?
 >
 > Methodology: A simulation of world governments, to try
 > to assess the chances they will coordinate in AI Research, and what
