@@ -5,7 +5,7 @@ from agent import *
 from cooperative import *
 class Simulation(object):
 
-    def __init__(self, _agent_size, _threshold, _different_init_progress, _initial_cooperation, _initial_spies, _initial_imposters):
+    def __init__(self, _agent_size, _threshold, _different_init_progress, _initial_cooperation, _initial_spies, _initial_imposters, _init_progress):
         self.agent_size = _agent_size
         self.population = []
         self.next_agent_id = 0
@@ -24,6 +24,7 @@ class Simulation(object):
         self.new_interactions = []
 
         self.population = self.create_population(agent_size)
+        self.cooperative = Cooperative(_init_progress)
 
     def create_population(self, agent_size):
         # creates an array of all agents
@@ -112,7 +113,7 @@ class Simulation(object):
                 if _agent.did_get_caught():
                     self.logger.got_caught(_agent, "Imposter")
             if (_agent.cooperate == False) and (_random_agent.cooperate == True):
-                if _agent.did_cooperate(_random_agent, self.threshold):
+                if _agent.did_cooperate(self.cooperative.progress, self.threshold):
                     _agent.cooperate = True
                     _random_agent.cooperate = True
                     if _agent.imposter:
@@ -121,7 +122,7 @@ class Simulation(object):
                     _random_agent.progress += (_agent.progress)
                 self.logger.log_interaction(_agent, _random_agent, "cooperate", _agent.cooperate)
             if (_agent.cooperate == True) and (_random_agent.cooperate == True):
-                if _agent.did_defect(_random_agent, self.threshold):
+                if _agent.did_defect(self.cooperative.progress, self.threshold):
                     _random_agent.progress -= _agent.progress
                     _agent.progress += (self.threshold - _random_agent.progress)
                 self.logger.log_interaction(_agent, _random_agent, "defect", _agent.defect)

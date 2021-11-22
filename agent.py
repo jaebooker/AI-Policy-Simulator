@@ -1,6 +1,7 @@
 import random
 from simulation import *
 from logger import *
+from cooperative import *
 
 class Agent(object):
     '''
@@ -28,28 +29,28 @@ class Agent(object):
         self.imposter = _imposter
 
 
-    def did_cooperate(self, _random_agent, _threshold):
+    def did_cooperate(self, _cooperative, _threshold):
         # checks if it is in agent's interest to cooperate
         # checks if progress gained by cooperating is greater than loss of progress from complying to AI Safety measures
 
         if self.imposter:
             return True
 
-        if _random_agent.progress < (self.progress + _threshold):
+        if _cooperative.progress < (self.progress + _threshold):
             return False
-        elif _random_agent.progress >= (self.progress + _threshold):
+        elif _cooperative.progress >= (self.progress + _threshold):
             return True
     
-    def did_defect(self, _random_agent, _threshold):
+    def did_defect(self, _cooperative, _threshold):
         # checks if it is in agent's best interest to defect
         # checks if progress gained by defecting is greater than progress from cooperating
 
-        if (self.cooperate) and (_random_agent.cooperate):
-            if _random_agent.progress < (self.progress + _threshold):
+        if (self.cooperate):
+            if _cooperative.progress < (self.progress + _threshold):
                 self.defect = True
                 self.cooperate = False
                 return True
-            elif _random_agent.progress >= (self.progress + _threshold):
+            elif _cooperative.progress >= (self.progress + _threshold):
                 return False
 
     def spying(self, random_agent):
