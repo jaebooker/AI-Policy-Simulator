@@ -10,12 +10,12 @@ class Cooperative(object):
         # 
         # 
         self.progress = _init_progress
-        self.members = []
+    #     self.members = []
 
-    def did_cooperate(self, agent):
-        self.members.append(agent)
-        self.progress += agent.progress
+    # def did_cooperate(self, agent):
+    #     self.members.append(agent)
+    #     self.progress += agent.progress
 
-    def did_defect(self, agent):
-        self.members.remove(agent)
-        self.progress -= agent.progress
+    # def did_defect(self, agent):
+    #     self.members.remove(agent)
+    #     self.progress -= agent.progress

@@ -92,6 +92,8 @@ class Simulation(object):
         for agent in self.population:
             if agent.total_progress >= 100:
                 self.ai_maturity = True
+            if agent.cooperate:
+                agent.progress = self.cooperative.progress
             agent.total_progress += agent.progress
             random_agent = random.randrange(0,len(self.population))
             if self.population[random_agent]._id != agent._id:
@@ -117,14 +119,15 @@ class Simulation(object):
                     _agent.cooperate = True
                     _random_agent.cooperate = True
                     if _agent.imposter:
-                        _agent.progress += (_random_agent.progress)
-                    _agent.progress += (_random_agent.progress - self.threshold)
-                    _random_agent.progress += (_agent.progress)
+                        _agent.progress += (self.cooperative.progress)
+                    else:
+                        _agent.progress += (self.cooperative.progress - self.threshold)
+                    self.cooperative.progress += (_agent.progress)
                 self.logger.log_interaction(_agent, _random_agent, "cooperate", _agent.cooperate)
             if (_agent.cooperate == True) and (_random_agent.cooperate == True):
                 if _agent.did_defect(self.cooperative.progress, self.threshold):
-                    _random_agent.progress -= _agent.progress
-                    _agent.progress += (self.threshold - _random_agent.progress)
+                    self.cooperative.progress -= _agent.progress
+                    _agent.progress += (self.threshold - self.cooperative.progress)
                 self.logger.log_interaction(_agent, _random_agent, "defect", _agent.defect)
 
     def threshold(self):
@@ -136,8 +139,8 @@ class Simulation(object):
     def spy(self, _agent, _random_agent):
         if _agent.spying(_random_agent):
             info_obtained = random.randrange(0,100)
-            _agent.progress += (_random_agent.progress ** (info_obtained / 100))
-            self.logger.log_spy(_agent, _random_agent, True, _random_agent.progress ** (info_obtained / 100))
+            _agent.progress += (self.cooperative.progress ** (info_obtained / 100))
+            self.logger.log_spy(_agent, _random_agent, True, self.cooperative.progress ** (info_obtained / 100))
         self.logger.log_spy(_agent, _random_agent, False, 0)
 
 if __name__ == "__main__":
