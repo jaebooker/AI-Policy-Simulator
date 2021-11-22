@@ -1,7 +1,6 @@
 import random
 from simulation import *
 from logger import *
-from cooperative import *
 
 class Agent(object):
     '''

@@ -1,6 +1,5 @@
 from simulation import *
 from agent import *
-from cooperative import *
 from meta_simulator import *
 
 class Logger(object):

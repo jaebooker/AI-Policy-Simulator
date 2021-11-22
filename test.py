@@ -1,6 +1,7 @@
 import simulation
 import logger
 import agent
+from meta_simulator import *
 
 def _test_simulation():
     agent_size = 20
