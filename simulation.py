@@ -22,9 +22,8 @@ class Simulation(object):
 
         self.logger.write_metadata(self.agent_size, self.threshold, self.different_init_progress, self.initial_cooperation)
         self.new_interactions = []
-
-        self.population = self.create_population(agent_size)
         self.cooperative = Cooperative(_init_progress)
+        self.population = self.create_population(agent_size)
 
     def create_population(self, agent_size):
         # creates an array of all agents
@@ -42,13 +41,17 @@ class Simulation(object):
                 if cooperate_count !=  self.initial_cooperation:
                     if imposter_count != self.initial_imposters:
                         agent = Agent(self.next_agent_id, True, number / 100, False, True)
+                        self.cooperative.progress += (number / 100)
+                        imposter_count += 1
                     else:
                         agent = Agent(self.next_agent_id, True, number / 100, False, False)
+                        self.cooperative.progress += (number / 100)
                     population.append(agent)
                     cooperate_count += 1
                 else:
                     if spy_count != initial_spies:
                         agent = Agent(self.next_agent_id, False, number / 100, True, False)
+                        spy_count += 1
                     else:
                         agent = Agent(self.next_agent_id, False, number / 100, False, False)
                     population.append(agent)
@@ -151,5 +154,6 @@ if __name__ == "__main__":
     initial_cooperation = int(params[3])
     initial_spies = int(params[4])
     initial_imposters = int(params[5])
-    simulation = Simulation(agent_size, threshold, different_init_progress, initial_cooperation, initial_spies, initial_imposters)
+    initial_progress = int(params[6])
+    simulation = Simulation(agent_size, threshold, different_init_progress, initial_cooperation, initial_spies, initial_imposters, initial_progress)
     simulation.run()
