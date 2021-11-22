@@ -22,7 +22,7 @@ class Simulation(object):
 
         self.logger.write_metadata(self.agent_size, self.threshold, self.different_init_progress, self.initial_cooperation)
         self.new_interactions = []
-        self.cooperative = Cooperative(_init_progress)
+        self.cooperative = _init_progress
         self.population = self.create_population(agent_size)
 
     def create_population(self, agent_size):
@@ -41,11 +41,11 @@ class Simulation(object):
                 if cooperate_count !=  self.initial_cooperation:
                     if imposter_count != self.initial_imposters:
                         agent = Agent(self.next_agent_id, True, number / 100, False, True)
-                        self.cooperative.progress += (number / 100)
+                        self.cooperative += (number / 100)
                         imposter_count += 1
                     else:
                         agent = Agent(self.next_agent_id, True, number / 100, False, False)
-                        self.cooperative.progress += (number / 100)
+                        self.cooperative += (number / 100)
                     population.append(agent)
                     cooperate_count += 1
                 else:
@@ -96,8 +96,12 @@ class Simulation(object):
             if agent.total_progress >= 100:
                 self.ai_maturity = True
             if agent.cooperate:
-                agent.progress = self.cooperative.progress
-            agent.total_progress += agent.progress
+                if agent.imposter:
+                    agent.total_progress += (self.cooperative - self.threshold)
+                else:
+                    agent.total_progress += self.cooperative
+            else:
+                agent.total_progress += agent.progress
             random_agent = random.randrange(0,len(self.population))
             if self.population[random_agent]._id != agent._id:
                 self.interaction(agent, self.population[random_agent])
@@ -118,19 +122,14 @@ class Simulation(object):
                 if _agent.did_get_caught():
                     self.logger.got_caught(_agent, "Imposter")
             if (_agent.cooperate == False) and (_random_agent.cooperate == True):
-                if _agent.did_cooperate(self.cooperative.progress, self.threshold):
+                if _agent.did_cooperate(self.cooperative, self.threshold):
                     _agent.cooperate = True
                     _random_agent.cooperate = True
-                    if _agent.imposter:
-                        _agent.progress += (self.cooperative.progress)
-                    else:
-                        _agent.progress += (self.cooperative.progress - self.threshold)
-                    self.cooperative.progress += (_agent.progress)
+                    self.cooperative += _agent.progress
                 self.logger.log_interaction(_agent, _random_agent, "cooperate", _agent.cooperate)
             if (_agent.cooperate == True) and (_random_agent.cooperate == True):
-                if _agent.did_defect(self.cooperative.progress, self.threshold):
-                    self.cooperative.progress -= _agent.progress
-                    _agent.progress += (self.threshold - self.cooperative.progress)
+                if _agent.did_defect(self.cooperative, self.threshold):
+                    self.cooperative -= _agent.progress
                 self.logger.log_interaction(_agent, _random_agent, "defect", _agent.defect)
 
     def threshold(self):
@@ -142,8 +141,8 @@ class Simulation(object):
     def spy(self, _agent, _random_agent):
         if _agent.spying(_random_agent):
             info_obtained = random.randrange(0,100)
-            _agent.progress += (self.cooperative.progress ** (info_obtained / 100))
-            self.logger.log_spy(_agent, _random_agent, True, self.cooperative.progress ** (info_obtained / 100))
+            _agent.progress += (self.cooperative ** (info_obtained / 100))
+            self.logger.log_spy(_agent, _random_agent, True, self.cooperative ** (info_obtained / 100))
         self.logger.log_spy(_agent, _random_agent, False, 0)
 
 if __name__ == "__main__":

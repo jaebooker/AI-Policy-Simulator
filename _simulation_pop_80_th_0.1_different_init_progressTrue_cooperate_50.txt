@@ -1,0 +1,221 @@
+Agents: 80	 Threshold: 0.1	 Different Initial Progress: True	 Initial Cooperation: 50
+Agent 1: 0	 Agent 2: 44	 defect : True 
+Agent: 1	 Type: Imposter	 got caught
+Agent 1: 1	 Agent 2: 46	 defect : True 
+Agent 1: 2	 Agent 2: 31	 defect : True 
+Agent 1: 4	 Agent 2: 7	 defect : True 
+Agent 1: 5	 Agent 2: 8	 defect : True 
+Agent 1: 8	 Agent 2: 33	 defect : True 
+Agent 1: 10	 Agent 2: 30	 defect : True 
+Agent 1: 12	 Agent 2: 42	 defect : True 
+Agent 1: 18	 Agent 2: 42	 defect : True 
+Agent 1: 19	 Agent 2: 21	 defect : True 
+Agent 1: 22	 Agent 2: 34	 defect : True 
+Agent 1: 23	 Agent 2: 36	 defect : True 
+Agent 1: 26	 Agent 2: 21	 defect : True 
+Agent 1: 27	 Agent 2: 40	 defect : True 
+Agent 1: 28	 Agent 2: 14	 defect : True 
+Agent 1: 33	 Agent 2: 48	 defect : True 
+Agent 1: 36	 Agent 2: 43	 defect : True 
+Agent 1: 38	 Agent 2: 42	 defect : True 
+Agent 1: 40	 Agent 2: 25	 defect : True 
+Agent 1: 45	 Agent 2: 24	 defect : True 
+Agent 1: 49	 Agent 2: 6	 defect : True 
+Spy: 50	 Spied on: 38	 Success False	 Amount: 0 
+Spy: 51	 Spied on: 61	 Success False	 Amount: 0 
+Spy: 52	 Spied on: 43	 Success False	 Amount: 0 
+Agent: 52	 Type: Spy	 got caught
+Spy: 53	 Spied on: 33	 Success False	 Amount: 0 
+Spy: 54	 Spied on: 58	 Success False	 Amount: 0 
+Agent 1: 57	 Agent 2: 35	 cooperate : False 
+Agent 1: 58	 Agent 2: 41	 cooperate : False 
+Agent 1: 59	 Agent 2: 9	 cooperate : False 
+Agent 1: 60	 Agent 2: 17	 cooperate : False 
+Agent 1: 62	 Agent 2: 47	 cooperate : False 
+Agent 1: 64	 Agent 2: 17	 cooperate : False 
+Agent 1: 73	 Agent 2: 17	 cooperate : False 
+Agent 1: 77	 Agent 2: 37	 cooperate : False 
+Time Steps: 1
+Agent 1: 9	 Agent 2: 32	 defect : True 
+Agent 1: 13	 Agent 2: 15	 defect : True 
+Agent 1: 14	 Agent 2: 35	 defect : True 
+Agent 1: 21	 Agent 2: 44	 defect : True 
+Agent 1: 30	 Agent 2: 17	 defect : True 
+Agent 1: 31	 Agent 2: 32	 defect : True 
+Agent 1: 41	 Agent 2: 44	 defect : True 
+Agent 1: 47	 Agent 2: 43	 defect : True 
+Spy: 50	 Spied on: 46	 Success False	 Amount: 0 
+Agent: 50	 Type: Spy	 got caught
+Spy: 51	 Spied on: 12	 Success True	 Amount: 1 
+Spy: 51	 Spied on: 12	 Success False	 Amount: 0 
+Spy: 53	 Spied on: 54	 Success False	 Amount: 0 
+Spy: 54	 Spied on: 71	 Success False	 Amount: 0 
+Agent 1: 57	 Agent 2: 46	 cooperate : False 
+Agent 1: 60	 Agent 2: 16	 cooperate : False 
+Agent 1: 66	 Agent 2: 25	 cooperate : False 
+Agent 1: 73	 Agent 2: 17	 cooperate : False 
+Agent 1: 78	 Agent 2: 29	 cooperate : False 
+Time Steps: 2
+Agent 1: 39	 Agent 2: 11	 defect : True 
+Agent 1: 46	 Agent 2: 16	 defect : True 
+Spy: 51	 Spied on: 32	 Success False	 Amount: 0 
+Spy: 53	 Spied on: 69	 Success True	 Amount: 1 
+Spy: 53	 Spied on: 69	 Success False	 Amount: 0 
+Agent: 53	 Type: Spy	 got caught
+Spy: 54	 Spied on: 1	 Success False	 Amount: 0 
+Agent 1: 64	 Agent 2: 17	 cooperate : False 
+Agent 1: 67	 Agent 2: 24	 cooperate : False 
+Agent 1: 71	 Agent 2: 15	 cooperate : False 
+Agent 1: 79	 Agent 2: 42	 cooperate : False 
+Time Steps: 3
+Agent 1: 7	 Agent 2: 34	 defect : True 
+Agent 1: 29	 Agent 2: 24	 defect : True 
+Agent 1: 44	 Agent 2: 34	 defect : True 
+Agent 1: 48	 Agent 2: 35	 defect : True 
+Spy: 51	 Spied on: 72	 Success False	 Amount: 0 
+Spy: 54	 Spied on: 50	 Success False	 Amount: 0 
+Agent: 54	 Type: Spy	 got caught
+Agent 1: 57	 Agent 2: 17	 cooperate : False 
+Agent 1: 58	 Agent 2: 15	 cooperate : False 
+Agent 1: 66	 Agent 2: 15	 cooperate : False 
+Agent 1: 75	 Agent 2: 34	 cooperate : False 
+Time Steps: 4
+Agent 1: 15	 Agent 2: 37	 defect : True 
+Agent 1: 16	 Agent 2: 20	 defect : True 
+Agent 1: 34	 Agent 2: 43	 defect : True 
+Spy: 51	 Spied on: 43	 Success False	 Amount: 0 
+Agent 1: 57	 Agent 2: 32	 cooperate : False 
+Agent 1: 59	 Agent 2: 37	 cooperate : False 
+Agent 1: 77	 Agent 2: 20	 cooperate : False 
+Agent 1: 78	 Agent 2: 6	 cooperate : False 
+Time Steps: 5
+Agent 1: 25	 Agent 2: 24	 defect : True 
+Spy: 51	 Spied on: 56	 Success False	 Amount: 0 
+Agent 1: 55	 Agent 2: 43	 cooperate : False 
+Agent 1: 62	 Agent 2: 6	 cooperate : False 
+Agent 1: 65	 Agent 2: 37	 cooperate : False 
+Agent 1: 79	 Agent 2: 6	 cooperate : False 
+Time Steps: 6
+Agent 1: 11	 Agent 2: 37	 defect : True 
+Spy: 51	 Spied on: 38	 Success True	 Amount: 1 
+Spy: 51	 Spied on: 38	 Success False	 Amount: 0 
+Agent 1: 56	 Agent 2: 24	 cooperate : False 
+Agent 1: 65	 Agent 2: 35	 cooperate : False 
+Agent 1: 68	 Agent 2: 24	 cooperate : False 
+Agent 1: 78	 Agent 2: 6	 cooperate : False 
+Time Steps: 7
+Agent 1: 20	 Agent 2: 24	 defect : True 
+Agent 1: 43	 Agent 2: 3	 defect : True 
+Spy: 51	 Spied on: 39	 Success False	 Amount: 0 
+Agent 1: 65	 Agent 2: 32	 cooperate : False 
+Agent 1: 79	 Agent 2: 35	 cooperate : False 
+Time Steps: 8
+Spy: 51	 Spied on: 59	 Success False	 Amount: 0 
+Agent: 51	 Type: Spy	 got caught
+Agent 1: 62	 Agent 2: 35	 cooperate : False 
+Agent 1: 63	 Agent 2: 42	 cooperate : False 
+Agent 1: 66	 Agent 2: 32	 cooperate : False 
+Agent 1: 69	 Agent 2: 37	 cooperate : False 
+Time Steps: 9
+Agent 1: 24	 Agent 2: 6	 defect : True 
+Agent 1: 59	 Agent 2: 3	 cooperate : False 
+Agent 1: 77	 Agent 2: 35	 cooperate : False 
+Time Steps: 10
+Agent 1: 64	 Agent 2: 32	 cooperate : False 
+Agent 1: 68	 Agent 2: 35	 cooperate : False 
+Time Steps: 11
+Agent 1: 32	 Agent 2: 42	 defect : True 
+Agent 1: 61	 Agent 2: 42	 cooperate : False 
+Agent 1: 70	 Agent 2: 17	 cooperate : False 
+Time Steps: 12
+Agent 1: 58	 Agent 2: 6	 cooperate : False 
+Agent 1: 66	 Agent 2: 35	 cooperate : False 
+Agent 1: 75	 Agent 2: 3	 cooperate : False 
+Time Steps: 13
+Agent 1: 58	 Agent 2: 35	 cooperate : False 
+Agent 1: 67	 Agent 2: 35	 cooperate : False 
+Agent 1: 76	 Agent 2: 6	 cooperate : False 
+Time Steps: 14
+Agent: 3	 Type: Imposter	 got caught
+Agent 1: 60	 Agent 2: 17	 cooperate : False 
+Agent 1: 65	 Agent 2: 6	 cooperate : False 
+Time Steps: 15
+Agent 1: 59	 Agent 2: 35	 cooperate : False 
+Agent 1: 61	 Agent 2: 6	 cooperate : False 
+Agent 1: 66	 Agent 2: 42	 cooperate : False 
+Time Steps: 16
+Agent 1: 66	 Agent 2: 6	 cooperate : False 
+Agent 1: 71	 Agent 2: 6	 cooperate : False 
+Time Steps: 17
+Agent 1: 37	 Agent 2: 35	 defect : True 
+Agent 1: 71	 Agent 2: 6	 cooperate : False 
+Agent 1: 75	 Agent 2: 42	 cooperate : False 
+Time Steps: 18
+Agent 1: 55	 Agent 2: 35	 cooperate : False 
+Time Steps: 19
+Agent 1: 17	 Agent 2: 42	 defect : True 
+Agent 1: 59	 Agent 2: 42	 cooperate : False 
+Time Steps: 20
+Agent 1: 57	 Agent 2: 35	 cooperate : False 
+Agent 1: 69	 Agent 2: 42	 cooperate : False 
+Time Steps: 21
+Time Steps: 22
+Agent 1: 66	 Agent 2: 42	 cooperate : False 
+Agent 1: 67	 Agent 2: 42	 cooperate : False 
+Agent 1: 75	 Agent 2: 42	 cooperate : False 
+Time Steps: 23
+Time Steps: 24
+Agent 1: 72	 Agent 2: 42	 cooperate : False 
+Time Steps: 25
+Agent 1: 79	 Agent 2: 6	 cooperate : False 
+Time Steps: 26
+Time Steps: 27
+Agent 1: 63	 Agent 2: 35	 cooperate : False 
+Time Steps: 28
+Agent 1: 65	 Agent 2: 6	 cooperate : False 
+Time Steps: 29
+Agent 1: 73	 Agent 2: 42	 cooperate : False 
+Time Steps: 30
+Agent 1: 55	 Agent 2: 42	 cooperate : False 
+Agent 1: 58	 Agent 2: 35	 cooperate : False 
+Agent 1: 65	 Agent 2: 6	 cooperate : False 
+Agent 1: 74	 Agent 2: 6	 cooperate : False 
+Time Steps: 31
+Agent 1: 55	 Agent 2: 6	 cooperate : False 
+Time Steps: 32
+Agent 1: 69	 Agent 2: 42	 cooperate : False 
+Time Steps: 33
+Agent 1: 68	 Agent 2: 35	 cooperate : False 
+Time Steps: 34
+Agent 1: 72	 Agent 2: 42	 cooperate : False 
+Time Steps: 35
+Time Steps: 36
+Agent 1: 35	 Agent 2: 6	 defect : True 
+Agent 1: 63	 Agent 2: 42	 cooperate : False 
+Agent 1: 68	 Agent 2: 6	 cooperate : False 
+Time Steps: 37
+Time Steps: 38
+Time Steps: 39
+Time Steps: 40
+Time Steps: 41
+Time Steps: 42
+Agent 1: 77	 Agent 2: 42	 cooperate : False 
+Time Steps: 43
+Time Steps: 44
+Agent 1: 57	 Agent 2: 42	 cooperate : False 
+Time Steps: 45
+Agent 1: 72	 Agent 2: 42	 cooperate : False 
+Time Steps: 46
+Agent 1: 55	 Agent 2: 6	 cooperate : False 
+Time Steps: 47
+Agent 1: 79	 Agent 2: 6	 cooperate : False 
+Time Steps: 48
+Time Steps: 49
+Time Steps: 50
+Time Steps: 51
+Time Steps: 52
+Time Steps: 53
+Time Steps: 54
+Agent 1: 76	 Agent 2: 42	 cooperate : False 
+Time Steps: 55
+Time Steps: 56
