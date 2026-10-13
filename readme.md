@@ -4,7 +4,7 @@
 
 Governments are agents in a repeated game. Each quarter they choose to cooperate (join a safety bloc, share research, meet a common safety standard) or race (go alone, keep secrets, let safety slip under pressure). Some are secretly deceptive. The run ends when someone crosses the AGI threshold, when a catastrophe happens first, or when time runs out.
 
-**Interactive version:** open `docs/index.html` in a browser, or enable GitHub Pages on the `docs/` folder. It runs the same model as the Python package: the same seed gives the same future in both.
+**Interactive version:** [ai-policy-simulator.vercel.app](https://ai-policy-simulator.vercel.app). It runs the same model as the Python package: the same seed gives the same future in both. The site is the static `docs/` folder; `vercel.json` tells Vercel to serve it with no build step. GitHub Pages on `docs/` works too.
 
 ## Quick start
 
@@ -72,8 +72,9 @@ Actors: United States, China, EU, UK, Japan and Korea, India, Gulf states, Russi
 policysim/      model.py (the model), rng.py, scenarios.py, montecarlo.py
 data/           scenarios.json: defaults, actors, trust, scenario presets (shared by Python and web)
 web/            model.js (JavaScript port), app.html (interactive page template)
-docs/           index.html: built standalone page
-scripts/        build_web.py: inlines model.js and scenarios.json into docs/index.html
+docs/           built static site: index.html, model.js, scenarios.js
+scripts/        build_web.py: builds docs/ from web/ and data/
+vercel.json     serves docs/ on Vercel with no build step
 tests/          test_model.py; parity_dump.py + parity.js check Python and JS agree run for run
 simulate.py     command line interface
 ```
