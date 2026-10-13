@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>AI Policy Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: briefing-room console. Masthead + scenario dossier tabs, then a two-column
+   desk (levers on the left, the live race and alliance map on the right), then the
+   odds across many futures and a sensitivity sweep. */
+:root {
+  --bg: #eef1f3;
+  --panel: #fbfcfc;
+  --ink: #132130;
+  --muted: #5b6876;
+  --line: #d3d9df;
+  --line-soft: #e3e8ec;
+  --accent: #2251b8;
+  --accent-soft: #dfe7f7;
+  --coop: #127a63;
+  --safe-uni: #4b7fd6;
+  --unsafe: #d06a2a;
+  --cat: #9c1f2b;
+  --timeout: #8c96a1;
+  --warn: #b98a12;
+  --a1: #2251b8; --a2: #c2372b; --a3: #127a63; --a4: #7a4cc2; --a5: #c27d0e;
+  --a6: #0f8aa0; --a7: #b2457f; --a8: #5d6b3a; --a9: #6b5244; --a10: #47607d;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e151d; --panel: #141e29; --ink: #e4eaf0; --muted: #93a1b0; --line: #2a3747; --line-soft: #1f2a37;
+    --accent: #7ea2f2; --accent-soft: #1d2b47; --coop: #3fbf9d; --safe-uni: #7ea2f2; --unsafe: #ec8c4f; --cat: #ec5b67;
+    --timeout: #6d7986; --warn: #e2b64a;
+    --a1: #7ea2f2; --a2: #ef7067; --a3: #3fbf9d; --a4: #b392f0; --a5: #e8a53f;
+    --a6: #45c3d8; --a7: #e47fb5; --a8: #a6b86a; --a9: #c39a83; --a10: #93abc9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e151d; --panel: #141e29; --ink: #e4eaf0; --muted: #93a1b0; --line: #2a3747; --line-soft: #1f2a37;
+  --accent: #7ea2f2; --accent-soft: #1d2b47; --coop: #3fbf9d; --safe-uni: #7ea2f2; --unsafe: #ec8c4f; --cat: #ec5b67;
+  --timeout: #6d7986; --warn: #e2b64a;
+  --a1: #7ea2f2; --a2: #ef7067; --a3: #3fbf9d; --a4: #b392f0; --a5: #e8a53f;
+  --a6: #45c3d8; --a7: #e47fb5; --a8: #a6b86a; --a9: #c39a83; --a10: #93abc9;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 850; font-stretch: 112%; letter-spacing: -0.01em; line-height: 1.02; }
+h2 { font-size: 20px; font-weight: 750; font-stretch: 100%; }
+h3 { font-size: 15px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.lede { max-width: 66ch; color: var(--muted); font-size: 16px; }
+.mono, .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+a { color: var(--accent); }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* masthead */
+.mast { display: grid; gap: 12px; padding-bottom: 20px; border-bottom: 2px solid var(--ink); }
+.mast-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; }
+.question { font-family: var(--display); font-stretch: 85%; font-size: clamp(17px, 2.2vw, 21px); font-weight: 500; max-width: 60ch; }
+
+/* scenario dossiers */
+.scenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.scen { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 12px 12px 10px; cursor: pointer; display: grid; gap: 6px; align-content: start; transition: border-color .15s, background .15s; }
+.scen:hover { border-color: var(--accent); }
+.scen[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 3px 0 var(--accent); }
+.scen .t { font-family: var(--display); font-weight: 700; font-size: 15px; line-height: 1.2; }
+.scen .odds { display: flex; align-items: baseline; gap: 6px; font-size: 12px; color: var(--muted); }
+.scen .odds b { font-family: var(--mono); font-size: 18px; color: var(--ink); font-weight: 500; }
+.scen-desc { font-size: 14px; color: var(--muted); max-width: 90ch; }
+
+/* desk */
+.desk { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 900px) { .desk { grid-template-columns: minmax(0, 1fr); } .levers { order: 2; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; min-width: 0; }
+.levers { display: grid; gap: 18px; }
+.group { display: grid; gap: 12px; }
+.group + .group { border-top: 1px solid var(--line-soft); padding-top: 14px; }
+.ctl { display: grid; gap: 3px; }
+.ctl-row { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+.ctl-row label { font-weight: 500; }
+.ctl-row output { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.ctl-row output.changed { color: var(--accent); font-weight: 500; }
+.ctl small { color: var(--muted); font-size: 12px; line-height: 1.35; }
+input[type=range] { width: 100%; accent-color: var(--accent); margin: 2px 0; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 4px; padding: 6px 12px; cursor: pointer; font-size: 13.5px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.stage { display: grid; gap: 16px; min-width: 0; }
+.run-head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.verdict { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid currentColor; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.o-safe_coordinated { color: var(--coop); } .o-safe_unilateral { color: var(--safe-uni); }
+.o-unsafe_arrival { color: var(--unsafe); } .o-catastrophe { color: var(--cat); } .o-timeout { color: var(--timeout); }
+.seed { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.seed input { width: 76px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); font-family: var(--mono); }
+.playbar { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.clock { font-family: var(--mono); font-size: 13px; min-width: 7ch; text-align: right; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--muted); }
+.stats b { font-family: var(--mono); color: var(--ink); font-weight: 500; }
+.views { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 1080px) { .views { grid-template-columns: minmax(0, 1fr); } }
+.chart-box { min-width: 0; display: grid; gap: 6px; }
+.chart-box svg { width: 100%; height: auto; display: block; overflow: visible; }
+.cap { font-size: 12px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.sw { width: 18px; height: 0; border-top: 2.5px solid currentColor; display: inline-block; }
+.sw.dash { border-top-style: dashed; }
+.axis text, .lbl { fill: var(--muted); font-family: var(--mono); font-size: 10.5px; }
+.grid line { stroke: var(--line-soft); }
+.log { max-height: 220px; overflow-y: auto; border-top: 1px solid var(--line-soft); font-size: 13px; }
+.log li { display: grid; grid-template-columns: 52px 74px minmax(0, 1fr); gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line-soft); }
+.log ul { list-style: none; margin: 0; padding: 0; }
+.kind { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; }
+.k-join { color: var(--coop); } .k-defect { color: var(--unsafe); } .k-exposed { color: var(--cat); }
+.k-warning { color: var(--warn); } .k-catastrophe { color: var(--cat); } .k-arrival { color: var(--accent); } .k-timeout { color: var(--muted); }
+.reveal { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
+
+/* actors table */
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 560px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line-soft); white-space: nowrap; }
+th { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 500; }
+td input[type=number] { width: 70px; padding: 3px 5px; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); font-family: var(--mono); font-size: 12.5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
+
+/* odds */
+.odds-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; }
+@media (max-width: 900px) { .odds-grid { grid-template-columns: minmax(0, 1fr); } }
+.headline { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.headline .big { font-family: var(--display); font-weight: 850; font-stretch: 110%; font-size: 56px; line-height: 1; }
+.stack { display: flex; height: 34px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); }
+.stack div { height: 100%; transition: flex-basis .3s; }
+.olist { display: grid; gap: 4px; font-size: 13.5px; }
+.olist div { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.olist i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.olist .num { font-size: 13px; }
+.section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+.note { font-size: 13px; color: var(--muted); max-width: 70ch; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px 32px; }
+.cols p, .cols li { font-size: 14px; }
+.cols ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+details summary { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 17px; }
+details[open] summary { margin-bottom: 14px; }
+.busy { opacity: .55; transition: opacity .2s; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="mast-top">
+      <span class="eyebrow">Game-theoretic model · calibrated to October 2026</span>
+      <span class="eyebrow">Each step = one quarter</span>
+    </div>
+    <h1>AI Policy Simulator</h1>
+    <p class="question">Will governments coordinate or compete as they build transformative AI, and which mechanisms tip the balance?</p>
+  </header>
+
+  <section aria-label="Scenarios" style="display:grid;gap:10px">
+    <div class="scenarios" id="scenarios"></div>
+    <p class="scen-desc" id="scenDesc"></p>
+  </section>
+
+  <div class="desk">
+    <aside class="panel levers" aria-label="Policy levers" id="levers"></aside>
+
+    <section class="stage">
+      <div class="panel" style="display:grid;gap:14px">
+        <div class="run-head">
+          <div class="verdict">
+            <h2>One possible future</h2>
+            <span id="verdict" class="pill"></span>
+          </div>
+          <div class="btn-row">
+            <label class="seed" for="seed">Seed <input id="seed" type="number" min="1" value="7"></label>
+            <button class="btn" id="newSeed" type="button">New future</button>
+          </div>
+        </div>
+        <div class="playbar">
+          <button class="btn primary" id="play" type="button" aria-label="Play">Play</button>
+          <input id="scrub" type="range" min="0" max="10" value="10" aria-label="Timeline">
+          <span class="clock" id="clock"></span>
+        </div>
+        <div class="stats" id="stats"></div>
+        <div class="views">
+          <div class="chart-box">
+            <h3>The race to the threshold</h3>
+            <svg id="race" viewBox="0 0 720 340" role="img" aria-label="Capability of each actor over time"></svg>
+            <div class="legend"><span><i class="sw"></i>inside the safety bloc</span><span><i class="sw dash"></i>racing alone</span><span style="color:var(--warn)">▲ warning shot</span><span style="color:var(--cat)">✕ deception exposed</span></div>
+          </div>
+          <div class="chart-box">
+            <div class="section-head"><h3>Alliance map</h3>
+              <label class="reveal" for="reveal"><input type="checkbox" id="reveal"> Reveal hidden agendas</label></div>
+            <svg id="net" viewBox="0 0 360 340" role="img" aria-label="Trust network between actors"></svg>
+            <p class="cap">Node size is capability. A ring marks bloc membership. Lines show mutual trust; blue lines link bloc members.</p>
+          </div>
+        </div>
+        <div class="log" aria-label="Event log"><ul id="log"></ul></div>
+      </div>
+
+      <div class="panel" style="display:grid;gap:10px">
+        <div class="section-head"><h2>The actors</h2><button class="btn" id="resetActors" type="button">Reset actors</button></div>
+        <p class="note">Capability is an index where 100 is the AGI threshold. Growth is per quarter. Safety is the share of frontier practice meeting a strong standard. These are stylized starting points, not measurements. Edit any cell.</p>
+        <div class="tbl-wrap"><table id="actors"></table></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel" style="display:grid;gap:18px" id="oddsPanel">
+    <div class="section-head">
+      <h2>Odds across many futures</h2>
+      <label class="seed" for="runs">Runs
+        <select id="runs" style="padding:4px 6px;border:1px solid var(--line);border-radius:4px;background:var(--bg)">
+          <option value="300">300</option><option value="1000" selected>1,000</option><option value="3000">3,000</option>
+        </select></label>
+    </div>
+    <div class="odds-grid">
+      <div style="display:grid;gap:14px;align-content:start">
+        <div class="headline"><span class="big" id="pGood">–</span><span class="note">chance of a good outcome: AGI arrives and alignment holds, with no catastrophe first</span></div>
+        <div class="stack" id="stack" aria-hidden="true"></div>
+        <div class="olist" id="olist"></div>
+        <div class="stats" id="mcStats"></div>
+      </div>
+      <div class="chart-box">
+        <h3>When AGI arrives</h3>
+        <svg id="hist" viewBox="0 0 420 200" role="img" aria-label="Distribution of arrival years"></svg>
+        <div class="stats" id="winners"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" style="display:grid;gap:14px">
+    <div class="section-head">
+      <h2>Which lever matters?</h2>
+      <div class="btn-row">
+        <label class="seed" for="sweepParam">Sweep
+          <select id="sweepParam" style="padding:4px 6px;border:1px solid var(--line);border-radius:4px;background:var(--bg)"></select></label>
+        <button class="btn primary" id="sweepBtn" type="button">Run sweep</button>
+      </div>
+    </div>
+    <p class="note">Holds everything else at the current settings and moves one lever across its range, 300 futures per point. The marker shows the current value.</p>
+    <svg id="sweep" viewBox="0 0 1100 300" role="img" aria-label="Sensitivity of outcomes to one parameter"></svg>
+    <div class="legend"><span style="color:var(--accent)"><i class="sw"></i>good outcome</span><span style="color:var(--coop)"><i class="sw dash"></i>safe and coordinated</span><span style="color:var(--cat)"><i class="sw"></i>catastrophe or unsafe arrival</span></div>
+  </section>
+
+  <section class="panel">
+    <details>
+      <summary>How the model works, and what changed since 2021</summary>
+      <div class="cols">
+        <div>
+          <h3>Each quarter</h3>
+          <ul>
+            <li>Every actor may reconsider joining or leaving the safety bloc. The pull toward cooperation rises with perceived risk, trust in partners, and the research it would gain. It falls with the cost of meeting the shared safety standard and with a lead it wants to protect.</li>
+            <li>Bloc members converge on the treaty safety standard and share research, which lets laggards catch up. Racers let safety erode when a rival is close.</li>
+            <li>Capability compounds. Past the critical research point, AI speeds up its own development.</li>
+            <li>Export controls slow restricted actors and erode their trust in the controllers.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Deception and verification</h3>
+          <ul>
+            <li>Some actors are secretly imposters (they take bloc research but skip the safety work) or spies (they race but steal research).</li>
+            <li>Verification catches them, deters them from trying, and partly replaces trust: you need less faith in what you can check.</li>
+            <li>An exposure zeroes trust in the deceiver, locks it out for two years, and dents trust everywhere.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Endings</h3>
+          <ul>
+            <li>Warning shots raise everyone's alarm, which then fades. This is the galvanizing event and enforcement gap of the coordination cycle.</li>
+            <li>A catastrophe can strike first. Its odds grow with capability, low safety, and a close race.</li>
+            <li>When someone crosses the threshold, success depends on its true safety level, its margin over the nearest rival outside its coalition, and whether it arrived inside a real coalition.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Rebuilt from the 2021 version</h3>
+          <ul>
+            <li>Named actors calibrated to 2026, with editable starting points. The original anonymous setup survives as the Classic scenario.</li>
+            <li>The old model had no notion of risk; AGI was the only ending. Now safety, catastrophe, and alignment are explicit.</li>
+            <li>New mechanics: verification, export controls, trust networks, warning shots, a recursive-improvement threshold.</li>
+            <li>Fixed bugs that made imposters lose progress, spies always log failure, and boolean flags always read true.</li>
+            <li>The Python package and this page share one model and one random generator; a given seed produces the same future in both.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="panel">
+    <details>
+      <summary>What the 2026 calibration draws on</summary>
+      <div class="cols">
+        <ul>
+          <li>EU rules for general-purpose models stay on schedule while high-risk deadlines slip to Dec 2027 and Aug 2028 under the AI Omnibus (in force 27 Jul 2026). <a href="https://www.mondaq.com/eu-digital-omnibus-on-ai-enters-into-force/1825722" target="_blank" rel="noopener">Mondaq</a></li>
+          <li>The US loosened chip sales to China in Jan 2026 with performance caps, a volume cap and a tariff. Chip location verification is still pending. <a href="https://casrai.org/wp/?p=2848" target="_blank" rel="noopener">CASRAI summary</a></li>
+          <li>Commerce placed export controls on frontier models themselves in June 2026, then authorized trusted partners. <a href="https://www.mayerbrown.com/en/insights/publications/2026/06/commerce-department-extends-export-controls-to-advanced-ai-models-authorizes-release-to-specific-trusted-partners" target="_blank" rel="noopener">Mayer Brown</a></li>
+          <li>The US and China agreed on a bilateral channel for AI incidents in Sept 2026. <a href="https://www.aljazeera.com/news/2026/9/26/china-us-to-open-ai-communication-channel-after-summit-white-house-says" target="_blank" rel="noopener">Al Jazeera</a></li>
+        </ul>
+        <ul>
+          <li>The first UN Global Dialogue on AI Governance (Geneva, Jul 2026) produced no binding agreement; the new Scientific Panel warned of catastrophic risk. <a href="https://ai2.work/blog/inside-the-global-dialogue-on-ai-governance-193-nations-one-table" target="_blank" rel="noopener">AI2 Work</a></li>
+          <li>Twenty-nine countries signed on to a China-led World AI Cooperation Organization in Shanghai (Jul 2026). <a href="https://ydyl.gansu.gov.cn/enggsydyl/news/topnews/202607/t20260717_38273.html" target="_blank" rel="noopener">Belt and Road Portal</a></li>
+          <li>US federal preemption of state AI laws remains unenacted; California's frontier transparency law took effect Jan 2026. <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-us-ai-regulation-preemption-compliance-202/" target="_blank" rel="noopener">CSA</a></li>
+          <li>The US and China hold roughly 90% of global AI compute. <a href="https://aiweekly.co/alerts/us-and-china-control-90-of-global-ai-compute-panel-says" target="_blank" rel="noopener">AI Weekly</a>. Evaluations miss dangerous capabilities and most risk management is voluntary. <a href="https://internationalaisafetyreport.org/publication/2026-report-extended-summary-policymakers" target="_blank" rel="noopener">International AI Safety Report 2026</a></li>
+        </ul>
+      </div>
+      <p class="note" style="margin-top:14px">Model and source code: <a href="https://github.com/jaebooker/AI-Policy-Simulator" target="_blank" rel="noopener">github.com/jaebooker/AI-Policy-Simulator</a>. All outputs are conditional on stylized assumptions; use them to compare levers, not as forecasts.</p>
+    </details>
+  </section>
+</div>
+
+<script>
+/* AI Policy Simulator model, JavaScript port of policysim/model.py.
+ * Mirrors the Python implementation step for step and uses the same Mulberry32
+ * generator, so the same seed and config produce the same run in both.
+ * Works in the browser (window.PolicySim) and in Node (module.exports). */
+(function (root) {
+  "use strict";
+
+  var OUTCOMES = ["safe_coordinated", "safe_unilateral", "unsafe_arrival", "catastrophe", "timeout"];
+
+  function Mulberry32(seed) {
+    var a = seed >>> 0;
+    this.next = function () {
+      a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function clamp01(x) { return x < 0 ? 0 : (x > 1 ? 1 : x); }
+  function sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+  function copy(o) { return JSON.parse(JSON.stringify(o)); }
+
+  function Simulation(config, seed) {
+    if (seed === undefined) seed = 1;
+    var p = this.p = Object.assign({}, config.params);
+    this.rng = new Mulberry32(seed);
+    this.t = 0;
+    this.events = [];
+    this.history = [];
+    this.outcome = null;
+    this.winner = null;
+    this.arrivalYear = null;
+    this.pSafe = null;
+    var rnd = this.rng.next;
+    this.actors = [];
+    for (var k = 0; k < config.actors.length; k++) {
+      var spec = config.actors[k];
+      var jitC = 1 + p.jitter * (rnd() * 2 - 1);
+      var jitG = 1 + p.jitter * 0.5 * (rnd() * 2 - 1);
+      var r = rnd();
+      var hidden = "honest";
+      if (r < p.deception_rate * (1 - p.deterrence * p.verification)) {
+        hidden = rnd() < 0.5 ? "imposter" : "spy";
+      }
+      this.actors.push({
+        name: spec.name, short: spec.short,
+        C: spec.C * jitC, g: spec.g * jitG,
+        s_base: spec.s, s: spec.s,
+        restricted: !!spec.restricted, coop: !!spec.coop,
+        hidden: hidden, hiddenAtStart: hidden,
+        risk: p.risk_init, locked_until: -1, exposed: false
+      });
+    }
+    this.trust = config.trust.map(function (row) { return row.slice(); });
+    this.snapshot();
+  }
+
+  var S = Simulation.prototype;
+
+  S.year = function () { return this.p.start_year + this.t / this.p.steps_per_year; };
+  S.log = function (kind, text, who) {
+    this.events.push({ t: this.t, year: Math.round(this.year() * 100) / 100, kind: kind, text: text, who: who });
+  };
+  S.bloc = function () {
+    var out = [];
+    for (var i = 0; i < this.actors.length; i++) if (this.actors[i].coop) out.push(i);
+    return out;
+  };
+  S.effTrust = function (i, j) {
+    var t = this.trust[i][j];
+    return t + this.p.verify_substitute * this.p.verification * (1 - t);
+  };
+  S.partners = function (i) {
+    var a = this.actors, n = a.length, pool = [], out = [], j;
+    var bloc = this.bloc().filter(function (q) { return q !== i; });
+    if (bloc.length > 0) pool = bloc; else for (j = 0; j < n; j++) if (j !== i) pool.push(j);
+    for (var k = 0; k < pool.length; k++) {
+      j = pool[k];
+      if (this.effTrust(i, j) >= this.p.min_trust && a[j].locked_until < this.t) out.push(j);
+    }
+    return out;
+  };
+  S.racePressure = function (i) {
+    var a = this.actors, best = 0;
+    for (var j = 0; j < a.length; j++) {
+      if (j !== i) {
+        var v = Math.exp(-Math.abs(a[i].C - a[j].C) / 10);
+        if (v > best) best = v;
+      }
+    }
+    return best;
+  };
+  S.maxCExcept = function (i, members) {
+    var m = 0;
+    for (var k = 0; k < members.length; k++) {
+      var j = members[k];
+      if (j !== i && this.actors[j].C > m) m = this.actors[j].C;
+    }
+    return m;
+  };
+  S.meanTrust = function () {
+    var n = this.actors.length, tot = 0;
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) if (i !== j) tot += this.trust[i][j];
+    return tot / (n * (n - 1));
+  };
+  S.snapshot = function () {
+    var a = this.actors, risk = 0;
+    for (var i = 0; i < a.length; i++) risk += a[i].risk;
+    this.history.push({
+      t: this.t, year: this.year(),
+      C: a.map(function (x) { return x.C; }),
+      s: a.map(function (x) { return x.s; }),
+      coop: a.map(function (x) { return x.coop; }),
+      risk: risk / a.length,
+      trust: this.meanTrust(),
+      T: this.trust.map(function (row) { return row.slice(); })
+    });
+  };
+
+  S.step = function () {
+    var p = this.p, a = this.actors, n = a.length, rnd = this.rng.next;
+    var i, j, k, u, v, all = [];
+    for (i = 0; i < n; i++) all.push(i);
+
+    // 1. decisions
+    for (i = 0; i < n; i++) {
+      var reconsider = rnd();
+      var draw = rnd();
+      if (reconsider >= p.reconsider || a[i].locked_until >= this.t) {
+        if (a[i].locked_until >= this.t) a[i].coop = false;
+        continue;
+      }
+      var parts = this.partners(i), choose;
+      if (parts.length === 0) {
+        choose = false;
+      } else {
+        var sumT = 0;
+        for (k = 0; k < parts.length; k++) sumT += this.effTrust(i, parts[k]);
+        var avgTrust = sumT / parts.length;
+        var poolGain = Math.min(1, Math.max(0, this.maxCExcept(i, parts) - a[i].C) / Math.max(a[i].C, 1));
+        var lead = (a[i].C - this.maxCExcept(i, all)) / 100;
+        var taxBurden = p.safety_tax * Math.max(0, p.treaty_standard - a[i].s_base);
+        if (a[i].hidden === "imposter") taxBurden = 0;
+        var score = p.w_bias + p.w_risk * a[i].risk + p.w_trust * avgTrust
+          + p.w_pool * poolGain - p.w_tax * taxBurden
+          - p.w_lead * Math.max(0, lead) * (a[i].C / 100);
+        if (a[i].hidden === "spy") score -= 1;
+        if (a[i].coop) score += p.exit_cost;
+        choose = draw < sigmoid(score);
+      }
+      if (choose && !a[i].coop) {
+        var members = this.bloc().filter(function (q) { return q !== i; });
+        var acceptance = 1;
+        if (members.length > 0) {
+          var sumA = 0;
+          for (k = 0; k < members.length; k++) sumA += this.effTrust(members[k], i);
+          acceptance = sumA / members.length;
+        }
+        if (acceptance >= p.min_trust) {
+          a[i].coop = true;
+          this.log("join", a[i].short + " joins the safety bloc", i);
+        }
+      } else if (!choose && a[i].coop) {
+        a[i].coop = false;
+        this.log("defect", a[i].short + " leaves the bloc to race", i);
+      }
+    }
+
+    var bloc = this.bloc();
+    var blocReal = bloc.length >= 2;
+
+    // 2. safety levels (true values)
+    for (i = 0; i < n; i++) {
+      var honestCoop = a[i].coop && blocReal && a[i].hidden !== "imposter";
+      if (honestCoop) {
+        var target = Math.max(p.treaty_standard, a[i].s);
+        a[i].s += p.convergence * (target - a[i].s);
+      } else {
+        a[i].s -= p.race_erosion * this.racePressure(i) * a[i].s;
+        a[i].s += 0.02 * (a[i].s_base - a[i].s);
+      }
+      a[i].s = Math.max(0.05, Math.min(1, a[i].s));
+    }
+
+    // 3. capability growth, spying, detection
+    var dC = [], exposed = [];
+    for (i = 0; i < n; i++) {
+      var ai = a[i];
+      var comp = ai.restricted ? 1 - 0.5 * p.export_controls : 1;
+      var paysTax = !(ai.hidden === "imposter" && ai.coop);
+      var tax = paysTax ? p.safety_tax * ai.s : 0;
+      var crpMult = 1;
+      if (ai.C >= p.crp) crpMult = 1 + p.recursive_boost * (ai.C - p.crp) / (p.agi_threshold - p.crp);
+      dC[i] = ai.C * ai.g * comp * (1 - tax) * crpMult;
+      if (ai.coop && blocReal) dC[i] += p.spillover * Math.max(0, this.maxCExcept(i, bloc) - ai.C);
+      var deceiving = false;
+      if (ai.hidden === "spy" && !ai.coop && bloc.length > 0) {
+        deceiving = true;
+        if (rnd() < p.spy_success) {
+          var gain = p.spy_gain * Math.max(0, this.maxCExcept(i, bloc) - ai.C);
+          dC[i] += gain;
+        }
+      }
+      if (ai.hidden === "imposter" && ai.coop && blocReal) deceiving = true;
+      if (deceiving) {
+        if (rnd() < p.verification * p.detect_base + 0.01) exposed.push(i);
+      }
+    }
+    for (i = 0; i < n; i++) a[i].C += dC[i];
+
+    for (var e = 0; e < exposed.length; e++) {
+      k = exposed[e];
+      var kind = a[k].hidden;
+      a[k].hidden = "honest";
+      a[k].exposed = true;
+      a[k].coop = false;
+      a[k].locked_until = this.t + p.exposure_lockout;
+      for (i = 0; i < n; i++) for (j = 0; j < n; j++) if (i !== j) this.trust[i][j] *= (1 - p.exposure_trust_hit);
+      for (i = 0; i < n; i++) if (i !== k) this.trust[i][k] = 0;
+      this.log("exposed", a[k].short + " caught acting as " + kind + "; trust collapses", k);
+    }
+
+    // 4. trust dynamics
+    var verifyFactor = 0.3 + 0.7 * p.verification;
+    for (i = 0; i < n; i++) {
+      for (j = 0; j < n; j++) {
+        if (i === j) continue;
+        if (a[i].coop && a[j].coop) this.trust[i][j] += p.trust_growth * verifyFactor * (1 - this.trust[i][j]);
+        if (a[i].restricted && !a[j].restricted) this.trust[i][j] -= p.export_trust_cost * p.export_controls;
+        this.trust[i][j] = clamp01(this.trust[i][j]);
+      }
+    }
+
+    // 5. hazards: catastrophe and galvanizing warning shots
+    for (i = 0; i < n; i++) {
+      var x = a[i].C / p.agi_threshold;
+      if (x > 1) x = 1;
+      var x2 = x * x;
+      var catP = p.catastrophe_rate * x2 * x2 * (1 - a[i].s) * (1 + this.racePressure(i));
+      var warnP = p.warning_rate * x2 * (1 - a[i].s);
+      var rCat = rnd();
+      var rWarn = rnd();
+      if (rCat < catP && this.outcome === null) {
+        this.outcome = "catastrophe";
+        this.winner = i;
+        this.log("catastrophe", "Catastrophe originating from " + a[i].short + " AI program", i);
+      } else if (rWarn < warnP) {
+        for (j = 0; j < n; j++) a[j].risk += p.warning_shock * (1 - a[j].risk);
+        for (u = 0; u < n; u++) for (v = 0; v < n; v++) if (u !== v) this.trust[u][v] = clamp01(this.trust[u][v] + p.shared_alarm);
+        this.log("warning", "Warning shot: serious incident traced to " + a[i].short, i);
+      }
+    }
+
+    // 6. alarm fades (the enforcement gap)
+    for (i = 0; i < n; i++) a[i].risk += p.risk_decay * (p.risk_floor - a[i].risk);
+
+    this.t += 1;
+
+    // 7. arrival
+    if (this.outcome === null) {
+      var order = all.slice().sort(function (q1, q2) { return a[q2].C - a[q1].C; });
+      var w = order[0];
+      if (a[w].C >= p.agi_threshold) {
+        var coalition = a[w].coop && this.bloc().length >= 2 && a[w].hidden === "honest";
+        var second = 0;
+        for (k = 1; k < order.length; k++) {
+          var q = order[k];
+          if (!(coalition && a[q].coop && a[q].hidden === "honest")) { second = a[q].C; break; }
+        }
+        var margin = (a[w].C - second) / a[w].C;
+        var pSafe = a[w].s * (0.55 + 0.45 * Math.min(1, margin / 0.25));
+        if (coalition) pSafe += 0.15;
+        pSafe = clamp01(pSafe);
+        this.winner = w;
+        this.arrivalYear = this.year();
+        if (rnd() < pSafe) {
+          this.outcome = coalition ? "safe_coordinated" : "safe_unilateral";
+          this.log("arrival", a[w].short + " reaches AGI safely" + (coalition ? " inside the coalition" : " alone"), w);
+        } else {
+          this.outcome = "unsafe_arrival";
+          this.log("arrival", a[w].short + " reaches AGI, but alignment fails", w);
+        }
+        this.pSafe = pSafe;
+      }
+    }
+    if (this.outcome === null && this.t >= p.max_steps) {
+      this.outcome = "timeout";
+      this.log("timeout", "No AGI within the simulated window", null);
+    }
+    this.snapshot();
+  };
+
+  S.run = function () {
+    while (this.outcome === null) this.step();
+    return this.result();
+  };
+
+  S.result = function () {
+    var coopSteps = 0, total = 0;
+    for (var h = 1; h < this.history.length; h++) {
+      var c = this.history[h].coop;
+      for (var i = 0; i < c.length; i++) { total += 1; if (c[i]) coopSteps += 1; }
+    }
+    var ex = 0, wa = 0;
+    for (var e = 0; e < this.events.length; e++) {
+      if (this.events[e].kind === "exposed") ex++;
+      if (this.events[e].kind === "warning") wa++;
+    }
+    return {
+      outcome: this.outcome,
+      winner: this.winner !== null ? this.actors[this.winner].short : null,
+      year: Math.round(this.year() * 100) / 100,
+      steps: this.t,
+      coop_share: total ? coopSteps / total : 0,
+      exposures: ex,
+      warnings: wa
+    };
+  };
+
+  // ---------------------------------------------------------------- scenarios
+  function build(spec, scenarioId, params, actorOverrides) {
+    var scen = spec.scenarios.filter(function (s) { return s.id === scenarioId; })[0];
+    var p = Object.assign({}, spec.defaults, scen.params || {}, params || {});
+    var actors, trust, n, i, j, idx = {};
+    if (scen.world === "generic") {
+      var g = spec.generic;
+      n = g.count;
+      actors = [];
+      for (i = 0; i < n; i++) {
+        actors.push({ name: "Government " + (i + 1), short: "G" + (i + 1), C: g.C, g: g.g, s: g.s,
+          restricted: false, coop: i < Math.round(n * g.coop_fraction) });
+      }
+      trust = [];
+      for (i = 0; i < n; i++) { trust.push([]); for (j = 0; j < n; j++) trust[i].push(i === j ? 0 : g.trust_default); }
+    } else {
+      var world = spec[scen.world];
+      actors = copy(world.actors);
+      n = actors.length;
+      actors.forEach(function (x, q) { idx[x.short] = q; });
+      trust = [];
+      for (i = 0; i < n; i++) { trust.push([]); for (j = 0; j < n; j++) trust[i].push(i === j ? 0 : world.trust_default); }
+      world.trust_pairs.concat(scen.trust_overrides || []).forEach(function (tp) {
+        trust[idx[tp[0]]][idx[tp[1]]] = tp[2];
+        trust[idx[tp[1]]][idx[tp[0]]] = tp[2];
+      });
+    }
+    idx = {};
+    actors.forEach(function (x, q) { idx[x.short] = q; });
+    [scen.actor_overrides || {}, actorOverrides || {}].forEach(function (ov) {
+      Object.keys(ov).forEach(function (short) { if (short in idx) Object.assign(actors[idx[short]], ov[short]); });
+    });
+    return { params: p, actors: actors, trust: trust };
+  }
+
+  function runMany(config, runs, seed) {
+    runs = runs || 1000; seed = seed || 1;
+    var counts = {}, years = [], winners = {}, coop = 0, exposures = 0;
+    OUTCOMES.forEach(function (o) { counts[o] = 0; });
+    for (var k = 0; k < runs; k++) {
+      var r = new Simulation(config, seed + k).run();
+      counts[r.outcome] += 1;
+      if (r.outcome === "safe_coordinated" || r.outcome === "safe_unilateral" || r.outcome === "unsafe_arrival") {
+        years.push(r.year);
+        winners[r.winner] = (winners[r.winner] || 0) + 1;
+      }
+      coop += r.coop_share;
+      exposures += r.exposures;
+    }
+    years.sort(function (x, y) { return x - y; });
+    var share = {};
+    OUTCOMES.forEach(function (o) { share[o] = counts[o] / runs; });
+    var w = {};
+    Object.keys(winners).sort(function (x, y) { return winners[y] - winners[x]; }).forEach(function (key) { w[key] = winners[key] / runs; });
+    return {
+      runs: runs, share: share,
+      p_good: (counts.safe_coordinated + counts.safe_unilateral) / runs,
+      median_year: years.length ? years[Math.floor(years.length / 2)] : null,
+      years: years,
+      winners: w,
+      mean_coop_share: coop / runs,
+      mean_exposures: exposures / runs
+    };
+  }
+
+  var api = { OUTCOMES: OUTCOMES, Mulberry32: Mulberry32, Simulation: Simulation, build: build, runMany: runMany };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.PolicySim = api;
+})(typeof window !== "undefined" ? window : this);
+
+</script>
+<script>
+var SPEC = {"_note":"Stylized, illustrative calibration. Capability is an index where 100 = transformative AI (the 'AGI threshold'). Growth is per quarter. Safety is the share of frontier practice meeting a strong safety standard (0-1). Trust is pairwise willingness to share and rely on another actor (0-1). None of these are measurements; edit them.","defaults":{"start_year":2026.75,"steps_per_year":4,"max_steps":80,"agi_threshold":100,"crp":75,"recursive_boost":1.5,"safety_tax":0.35,"spillover":0.06,"verification":0.15,"export_controls":0.4,"export_trust_cost":0.01,"treaty_standard":0.7,"convergence":0.15,"race_erosion":0.04,"risk_init":0.35,"risk_floor":0.2,"risk_decay":0.05,"warning_rate":0.08,"warning_shock":0.25,"shared_alarm":0.03,"catastrophe_rate":0.004,"deception_rate":0.15,"detect_base":0.25,"spy_success":0.5,"spy_gain":0.05,"exposure_trust_hit":0.15,"exposure_lockout":8,"trust_growth":0.02,"min_trust":0.3,"reconsider":0.25,"jitter":0.1,"w_bias":-2.5,"w_risk":4.0,"w_trust":2.5,"w_pool":1.5,"w_tax":2.0,"w_lead":3.0,"deterrence":0.7,"exit_cost":0.5,"verify_substitute":0.5},"world_2026":{"actors":[{"name":"United States","short":"US","C":50,"g":0.035,"s":0.45,"restricted":false,"coop":false},{"name":"China","short":"CN","C":45,"g":0.043,"s":0.4,"restricted":true,"coop":false},{"name":"European Union","short":"EU","C":25,"g":0.03,"s":0.65,"restricted":false,"coop":true},{"name":"United Kingdom","short":"UK","C":22,"g":0.03,"s":0.6,"restricted":false,"coop":true},{"name":"Japan & Korea","short":"JK","C":22,"g":0.03,"s":0.5,"restricted":false,"coop":true},{"name":"India","short":"IN","C":15,"g":0.04,"s":0.35,"restricted":false,"coop":false},{"name":"Gulf states","short":"GU","C":15,"g":0.045,"s":0.3,"restricted":false,"coop":false},{"name":"Russia","short":"RU","C":10,"g":0.025,"s":0.2,"restricted":true,"coop":false}],"trust_default":0.3,"trust_pairs":[["US","UK",0.7],["US","EU",0.5],["US","JK",0.65],["UK","EU",0.6],["UK","JK",0.55],["EU","JK",0.55],["US","GU",0.5],["US","IN",0.4],["US","CN",0.2],["US","RU",0.08],["CN","RU",0.5],["CN","GU",0.35],["CN","IN",0.2],["CN","EU",0.3],["EU","RU",0.08],["UK","RU",0.08],["JK","CN",0.2],["JK","RU",0.1],["IN","RU",0.4]]},"scenarios":[{"id":"status_quo","title":"Fragmented (Oct 2026)","summary":"Where things stand: binding EU rules on general-purpose models, a voluntary US federal approach, partial chip-export loosening, a new US-China incident channel, and non-binding UN talks.","world":"world_2026","params":{},"actor_overrides":{},"trust_overrides":[]},{"id":"hotline","title":"Incident hotline works","summary":"The US-China AI incident channel agreed in September 2026 becomes real: warning shots are shared fast and turn into trust instead of blame.","world":"world_2026","params":{"shared_alarm":0.12,"risk_decay":0.035},"actor_overrides":{},"trust_overrides":[["US","CN",0.3]]},{"id":"chip_verification","title":"Verifiable compute","summary":"Chip location verification and on-chip governance (as in the pending Chip Security Act) make cheating and smuggling visible. Export controls stay targeted.","world":"world_2026","params":{"verification":0.6,"export_controls":0.5},"actor_overrides":{},"trust_overrides":[]},{"id":"decoupled","title":"Decoupled race","summary":"Talks collapse, export controls go near-total, safety commitments erode under competitive pressure, and alarm fades quickly between incidents.","world":"world_2026","params":{"export_controls":0.9,"risk_decay":0.1,"shared_alarm":0.0,"export_trust_cost":0.02},"actor_overrides":{"US":{"s":0.35},"CN":{"s":0.3}},"trust_overrides":[["US","CN",0.05],["CN","EU",0.15],["CN","JK",0.1]]},{"id":"treaty","title":"Verified treaty","summary":"An IAEA-style regime: inspections, a high shared safety standard, all major actors start inside the agreement, and incidents are pooled.","world":"world_2026","params":{"verification":0.8,"treaty_standard":0.85,"shared_alarm":0.12,"export_controls":0.2,"exit_cost":2.5},"actor_overrides":{"US":{"coop":true},"CN":{"coop":true},"IN":{"coop":true},"GU":{"coop":true}},"trust_overrides":[["US","CN",0.45],["CN","EU",0.45],["CN","JK",0.4],["CN","IN",0.4]]},{"id":"classic","title":"Classic (2021 model)","summary":"The original abstract setup: identical governments, no export controls, open choice to cooperate, defect, spy or pose as an imposter.","world":"generic","params":{"export_controls":0.0,"deception_rate":0.25,"jitter":0.4},"actor_overrides":{},"trust_overrides":[]}],"generic":{"count":10,"C":30,"g":0.035,"s":0.4,"trust_default":0.4,"coop_fraction":0.5}};
+(function () {
+  "use strict";
+  var PS = window.PolicySim;
+  var NS = "http://www.w3.org/2000/svg";
+  var OUT_LABEL = {
+    safe_coordinated: "Safe arrival, coordinated",
+    safe_unilateral: "Safe arrival, unilateral",
+    unsafe_arrival: "Unsafe arrival",
+    catastrophe: "Catastrophe before AGI",
+    timeout: "No AGI by " + Math.floor(SPEC.defaults.start_year + SPEC.defaults.max_steps / SPEC.defaults.steps_per_year)
+  };
+  var OUT_VAR = { safe_coordinated: "--coop", safe_unilateral: "--safe-uni", unsafe_arrival: "--unsafe", catastrophe: "--cat", timeout: "--timeout" };
+
+  var LEVERS = [
+    { group: "Governance levers", items: [
+      ["verification", "Verification", 0, 1, 0.05, "Chip tracking, inspections, audits. Catches and deters cheating."],
+      ["export_controls", "Export controls", 0, 1, 0.05, "How hard leaders restrict compute to rival actors."],
+      ["treaty_standard", "Bloc safety standard", 0.3, 1, 0.05, "Safety level bloc members commit to."],
+      ["exit_cost", "Cost of leaving the bloc", 0, 4, 0.1, "Sanctions and reputation. Treaties make exits expensive."],
+      ["shared_alarm", "Incident sharing", 0, 0.2, 0.01, "Trust gained when a warning shot is shared rather than blamed."]
+    ]},
+    { group: "Technology", items: [
+      ["crp", "Critical research point", 40, 99, 1, "Capability where AI starts accelerating its own progress."],
+      ["recursive_boost", "Recursive speed-up", 0, 4, 0.1, "Extra growth at the threshold from self-improvement."],
+      ["safety_tax", "Safety tax", 0, 0.8, 0.05, "Growth given up at full safety."],
+      ["spillover", "Research sharing", 0, 0.2, 0.01, "How fast bloc members close the gap to the bloc leader."]
+    ]},
+    { group: "Risk and behaviour", items: [
+      ["warning_rate", "Warning shot rate", 0, 0.3, 0.01, "Odds of a serious, non-fatal incident near the frontier."],
+      ["catastrophe_rate", "Catastrophe rate", 0, 0.02, 0.001, "Odds of an unrecoverable accident near the frontier."],
+      ["risk_decay", "Alarm fade", 0, 0.2, 0.01, "How quickly attention drifts back after a scare."],
+      ["deception_rate", "Deception rate", 0, 0.8, 0.05, "Chance an actor secretly plays imposter or spy."]
+    ]}
+  ];
+  var SWEEPS = ["verification", "export_controls", "treaty_standard", "exit_cost", "safety_tax", "deception_rate", "spillover", "warning_rate", "catastrophe_rate", "crp"];
+
+  var st = { scen: "status_quo", cfg: null, base: null, sim: null, idx: 0, playing: null, mc: null, sweep: null, scenOdds: {} };
+  function $(id) { return document.getElementById(id); }
+  function cssv(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function actorColor(i) { return "var(--a" + ((i % 10) + 1) + ")"; }
+  function pct(x, d) { return (x * 100).toFixed(d === undefined ? 0 : d) + "%"; }
+  function el(tag, attrs, parent, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function fmtParam(key, v) {
+    if (key === "crp") return String(Math.round(v));
+    if (key === "catastrophe_rate") return v.toFixed(3);
+    if (key === "recursive_boost" || key === "exit_cost") return v.toFixed(1);
+    return v.toFixed(2);
+  }
+  function debounce(fn, ms) { var h; return function () { clearTimeout(h); h = setTimeout(fn, ms); }; }
+
+  // ------------------------------------------------------------ scenarios
+  function renderScenarios() {
+    var box = $("scenarios"); box.innerHTML = "";
+    SPEC.scenarios.forEach(function (s) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "scen"; b.setAttribute("aria-pressed", s.id === st.scen ? "true" : "false");
+      var odds = st.scenOdds[s.id];
+      b.innerHTML = '<span class="t"></span><span class="odds"><b>' + (odds === undefined ? "··" : pct(odds)) + "</b>good outcome</span>";
+      b.querySelector(".t").textContent = s.title;
+      b.addEventListener("click", function () { selectScenario(s.id); });
+      box.appendChild(b);
+    });
+    var cur = SPEC.scenarios.filter(function (s) { return s.id === st.scen; })[0];
+    $("scenDesc").textContent = cur.summary;
+  }
+  function selectScenario(id) {
+    st.scen = id;
+    st.base = PS.build(SPEC, id);
+    st.cfg = JSON.parse(JSON.stringify(st.base));
+    renderScenarios(); renderLevers(); renderActors();
+    st.sweep = null; drawSweep();
+    rerun();
+    setTimeout(runSweep, 300);
+  }
+
+  // ------------------------------------------------------------ levers
+  function renderLevers() {
+    var box = $("levers"); box.innerHTML = "";
+    LEVERS.forEach(function (g) {
+      var grp = document.createElement("div"); grp.className = "group";
+      grp.innerHTML = '<span class="eyebrow"></span>'; grp.firstChild.textContent = g.group;
+      g.items.forEach(function (it) {
+        var key = it[0], v = st.cfg.params[key];
+        var c = document.createElement("div"); c.className = "ctl";
+        c.innerHTML = '<div class="ctl-row"><label for="p_' + key + '"></label><output id="o_' + key + '"></output></div>' +
+          '<input type="range" id="p_' + key + '" min="' + it[2] + '" max="' + it[3] + '" step="' + it[4] + '"><small></small>';
+        c.querySelector("label").textContent = it[1];
+        c.querySelector("small").textContent = it[5];
+        var input = c.querySelector("input"), out = c.querySelector("output");
+        input.value = v;
+        var sync = function () {
+          var val = parseFloat(input.value);
+          out.textContent = fmtParam(key, val);
+          out.classList.toggle("changed", Math.abs(val - st.base.params[key]) > 1e-9);
+        };
+        sync();
+        input.addEventListener("input", function () { st.cfg.params[key] = parseFloat(input.value); sync(); rerunSoon(); });
+        grp.appendChild(c);
+      });
+      box.appendChild(grp);
+    });
+    var row = document.createElement("div"); row.className = "btn-row";
+    var reset = document.createElement("button"); reset.type = "button"; reset.className = "btn"; reset.textContent = "Reset levers";
+    reset.addEventListener("click", function () { st.cfg.params = Object.assign({}, st.base.params); renderLevers(); rerun(); });
+    row.appendChild(reset); box.appendChild(row);
+  }
+
+  // ------------------------------------------------------------ actors table
+  function renderActors() {
+    var t = $("actors"); t.innerHTML = "";
+    var head = "<thead><tr><th>Actor</th><th>Capability</th><th>Growth / qtr</th><th>Safety</th><th>Export-restricted</th><th>Starts in bloc</th></tr></thead>";
+    var rows = st.cfg.actors.map(function (a, i) {
+      return "<tr><td><span class='dot' style='background:" + actorColor(i) + "'></span>" + a.name.replace(/</g, "&lt;") + " <span class='mono' style='color:var(--muted)'>" + a.short + "</span></td>" +
+        "<td><input type='number' id='a_" + i + "_C' data-i='" + i + "' data-f='C' min='1' max='99' step='1' value='" + a.C + "' aria-label='" + a.short + " capability'></td>" +
+        "<td><input type='number' id='a_" + i + "_g' data-i='" + i + "' data-f='g' min='0' max='0.15' step='0.005' value='" + a.g + "' aria-label='" + a.short + " growth'></td>" +
+        "<td><input type='number' id='a_" + i + "_s' data-i='" + i + "' data-f='s' min='0.05' max='1' step='0.05' value='" + a.s + "' aria-label='" + a.short + " safety'></td>" +
+        "<td><input type='checkbox' id='a_" + i + "_r' data-i='" + i + "' data-f='restricted' " + (a.restricted ? "checked" : "") + " aria-label='" + a.short + " export restricted'></td>" +
+        "<td><input type='checkbox' id='a_" + i + "_k' data-i='" + i + "' data-f='coop' " + (a.coop ? "checked" : "") + " aria-label='" + a.short + " starts in bloc'></td></tr>";
+    }).join("");
+    t.innerHTML = head + "<tbody>" + rows + "</tbody>";
+    t.querySelectorAll("input").forEach(function (inp) {
+      inp.addEventListener("change", function () {
+        var a = st.cfg.actors[+inp.dataset.i], f = inp.dataset.f;
+        if (inp.type === "checkbox") a[f] = inp.checked;
+        else { var v = parseFloat(inp.value); if (!isNaN(v)) a[f] = v; }
+        rerunSoon();
+      });
+    });
+  }
+
+  // ------------------------------------------------------------ single run
+  function runSingle() {
+    var seed = parseInt($("seed").value, 10) || 1;
+    st.sim = new PS.Simulation(st.cfg, seed);
+    st.sim.run();
+    $("scrub").max = st.sim.history.length - 1;
+    st.idx = st.sim.history.length - 1;
+    $("scrub").value = st.idx;
+    var v = $("verdict");
+    v.className = "pill o-" + st.sim.outcome;
+    var w = st.sim.winner !== null ? st.sim.actors[st.sim.winner].short : "";
+    var txt = OUT_LABEL[st.sim.outcome];
+    if (st.sim.outcome !== "timeout") txt += " · " + w + " · " + st.sim.history[st.sim.history.length - 1].year.toFixed(2);
+    v.textContent = txt;
+    drawFrame();
+  }
+
+  function drawFrame() {
+    drawRace(); drawNet(); drawLog(); drawStats();
+  }
+
+  function drawStats() {
+    var h = st.sim.history[st.idx];
+    var y = h.year, q = Math.round((y - Math.floor(y)) * 4) + 1;
+    $("clock").textContent = Math.floor(y) + " Q" + q;
+    var members = h.coop.filter(Boolean).length;
+    $("stats").innerHTML = "<span>Bloc members <b>" + members + "/" + h.coop.length + "</b></span>" +
+      "<span>Perceived risk <b>" + pct(h.risk) + "</b></span>" +
+      "<span>Mean trust <b>" + pct(h.trust) + "</b></span>" +
+      "<span>Frontier capability <b>" + Math.max.apply(null, h.C).toFixed(1) + "</b></span>";
+  }
+
+  function drawRace() {
+    var svg = $("race"); clear(svg);
+    var sim = st.sim, H = sim.history, p = sim.p;
+    var W = 720, Ht = 340, m = { l: 40, r: 44, t: 22, b: 30 };
+    var x0 = H[0].year, x1 = Math.max(H[H.length - 1].year, x0 + 3);
+    var yMax = Math.max(p.agi_threshold * 1.08, 10);
+    H.forEach(function (h) { h.C.forEach(function (c) { if (c > yMax) yMax = c * 1.02; }); });
+    var X = function (v) { return m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r); };
+    var Y = function (v) { return Ht - m.b - v / yMax * (Ht - m.t - m.b); };
+    var grid = el("g", { "class": "grid" }, svg), axis = el("g", { "class": "axis" }, svg);
+    for (var v = 0; v <= yMax; v += 20) {
+      el("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v) }, grid);
+      el("text", { x: m.l - 6, y: Y(v) + 3.5, "text-anchor": "end" }, axis, v);
+    }
+    for (var yr = Math.ceil(x0); yr <= x1; yr++) {
+      el("line", { x1: X(yr), x2: X(yr), y1: Ht - m.b, y2: Ht - m.b + 4, stroke: "var(--line)" }, axis);
+      el("text", { x: X(yr), y: Ht - m.b + 16, "text-anchor": "middle" }, axis, yr);
+    }
+    el("line", { x1: m.l, x2: W - m.r, y1: Ht - m.b, y2: Ht - m.b, stroke: "var(--line)" }, axis);
+    // thresholds
+    el("line", { x1: m.l, x2: W - m.r, y1: Y(p.agi_threshold), y2: Y(p.agi_threshold), stroke: "var(--ink)", "stroke-width": 1.2 }, svg);
+    el("text", { x: m.l + 4, y: Y(p.agi_threshold) - 5, "class": "lbl", style: "fill:var(--ink)" }, svg, "AGI threshold");
+    el("line", { x1: m.l, x2: W - m.r, y1: Y(p.crp), y2: Y(p.crp), stroke: "var(--muted)", "stroke-dasharray": "2 4" }, svg);
+    el("text", { x: m.l + 4, y: Y(p.crp) - 5, "class": "lbl" }, svg, "Critical research point");
+    // lines, split into solid (bloc) and dashed (racing) runs
+    var n = sim.actors.length, last = st.idx;
+    for (var i = 0; i < n; i++) {
+      var col = actorColor(i), k = 1;
+      while (k <= last) {
+        var status = H[k].coop[i], pts = [X(H[k - 1].year) + "," + Y(H[k - 1].C[i])];
+        while (k <= last && H[k].coop[i] === status) { pts.push(X(H[k].year) + "," + Y(H[k].C[i])); k++; }
+        el("polyline", { points: pts.join(" "), fill: "none", stroke: col, "stroke-width": status ? 2.6 : 1.8,
+          "stroke-dasharray": status ? "none" : "5 4", "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+      }
+      el("circle", { cx: X(H[last].year), cy: Y(H[last].C[i]), r: 3.4, fill: col }, svg);
+    }
+    // end labels, de-overlapped
+    var labs = sim.actors.map(function (a, i) { return { i: i, y: Y(H[last].C[i]), t: a.short }; }).sort(function (a, b) { return a.y - b.y; });
+    for (var q = 1; q < labs.length; q++) if (labs[q].y - labs[q - 1].y < 11) labs[q].y = labs[q - 1].y + 11;
+    labs.forEach(function (L) {
+      el("text", { x: X(H[last].year) + 7, y: L.y + 3.5, "class": "lbl", style: "fill:" + actorColor(L.i) + ";font-weight:500" }, svg, L.t);
+    });
+    // events
+    sim.events.forEach(function (e) {
+      if (e.t >= last) return;
+      var ex = X(H[0].year + (e.t + 0.5) / p.steps_per_year);
+      if (e.kind === "warning") el("text", { x: ex, y: m.t - 6, "text-anchor": "middle", style: "fill:var(--warn);font-size:11px" }, svg, "▲");
+      if (e.kind === "exposed") el("text", { x: ex, y: m.t - 6, "text-anchor": "middle", style: "fill:var(--cat);font-size:12px;font-weight:700" }, svg, "✕");
+    });
+    // cursor
+    el("line", { x1: X(H[last].year), x2: X(H[last].year), y1: m.t, y2: Ht - m.b, stroke: "var(--muted)", "stroke-opacity": 0.35 }, svg);
+  }
+
+  function drawNet() {
+    var svg = $("net"); clear(svg);
+    var sim = st.sim, h = sim.history[st.idx], n = sim.actors.length;
+    var cx = 180, cy = 170, R = n > 8 ? 128 : 120, reveal = $("reveal").checked;
+    var pos = sim.actors.map(function (a, i) {
+      var ang = -Math.PI / 2 + i * 2 * Math.PI / n;
+      return [cx + R * Math.cos(ang), cy + R * Math.sin(ang)];
+    });
+    for (var i = 0; i < n; i++) for (var j = i + 1; j < n; j++) {
+      var t = (h.T[i][j] + h.T[j][i]) / 2;
+      if (t < 0.18) continue;
+      var both = h.coop[i] && h.coop[j];
+      el("line", { x1: pos[i][0], y1: pos[i][1], x2: pos[j][0], y2: pos[j][1],
+        stroke: both ? "var(--accent)" : "var(--muted)", "stroke-width": (0.6 + 3.2 * t).toFixed(2),
+        "stroke-opacity": (both ? 0.25 + 0.65 * t : 0.12 + 0.4 * t).toFixed(2) }, svg);
+    }
+    // who has been exposed by this point
+    var exposedBy = {};
+    sim.events.forEach(function (e) { if (e.kind === "exposed" && e.t <= st.idx) exposedBy[e.who] = true; });
+    sim.actors.forEach(function (a, i) {
+      var r = 7 + Math.min(h.C[i], 110) / 100 * 15;
+      if (h.coop[i]) el("circle", { cx: pos[i][0], cy: pos[i][1], r: r + 4.5, fill: "none", stroke: "var(--accent)", "stroke-width": 2 }, svg);
+      el("circle", { cx: pos[i][0], cy: pos[i][1], r: r, fill: actorColor(i), stroke: "var(--panel)", "stroke-width": 1.5 }, svg);
+      var dx = pos[i][0] - cx, dy = pos[i][1] - cy, d = Math.sqrt(dx * dx + dy * dy) || 1;
+      var lx = pos[i][0] + dx / d * (r + 16), ly = pos[i][1] + dy / d * (r + 14) + 4;
+      el("text", { x: lx, y: ly, "text-anchor": "middle", "class": "lbl", style: "fill:var(--ink);font-weight:500" }, svg, a.short);
+      var tag = null;
+      if (exposedBy[i]) tag = ["exposed", "var(--cat)"];
+      else if (reveal && a.hiddenAtStart !== "honest") tag = [a.hiddenAtStart, "var(--warn)"];
+      if (tag) el("text", { x: lx, y: ly + 11, "text-anchor": "middle", "class": "lbl", style: "fill:" + tag[1] + ";font-size:9.5px" }, svg, tag[0]);
+    });
+  }
+
+  function drawLog() {
+    var ul = $("log"); ul.innerHTML = "";
+    var evs = st.sim.events.filter(function (e) { return e.t < st.idx || ((e.kind === "arrival" || e.kind === "catastrophe" || e.kind === "timeout") && st.idx === st.sim.history.length - 1); });
+    if (!evs.length) { ul.innerHTML = "<li><span></span><span></span><span style='color:var(--muted)'>No diplomatic moves yet.</span></li>"; return; }
+    evs.slice().reverse().forEach(function (e) {
+      var li = document.createElement("li");
+      li.innerHTML = "<span class='mono'>" + e.year.toFixed(2) + "</span><span class='kind k-" + e.kind + "'>" + e.kind + "</span><span></span>";
+      li.lastChild.textContent = e.text;
+      ul.appendChild(li);
+    });
+  }
+
+  // ------------------------------------------------------------ Monte Carlo
+  function runMC() {
+    var runs = parseInt($("runs").value, 10);
+    st.mc = PS.runMany(st.cfg, runs, 1);
+    var s = st.mc.share;
+    $("pGood").textContent = pct(st.mc.p_good);
+    var stack = $("stack"); stack.innerHTML = "";
+    var list = $("olist"); list.innerHTML = "";
+    PS.OUTCOMES.forEach(function (o) {
+      var d = document.createElement("div");
+      d.style.flex = "0 0 " + (s[o] * 100) + "%"; d.style.background = "var(" + OUT_VAR[o] + ")";
+      d.title = OUT_LABEL[o] + " " + pct(s[o], 1);
+      stack.appendChild(d);
+      var row = document.createElement("div");
+      row.innerHTML = "<i style='background:var(" + OUT_VAR[o] + ")'></i><span></span><span class='num'>" + pct(s[o], 1) + "</span>";
+      row.children[1].textContent = OUT_LABEL[o];
+      list.appendChild(row);
+    });
+    $("mcStats").innerHTML = "<span>Median arrival <b>" + (st.mc.median_year ? st.mc.median_year.toFixed(1) : "none") + "</b></span>" +
+      "<span>Actor-quarters in the bloc <b>" + pct(st.mc.mean_coop_share) + "</b></span>" +
+      "<span>Deceivers exposed per run <b>" + st.mc.mean_exposures.toFixed(2) + "</b></span>";
+    var w = Object.keys(st.mc.winners).slice(0, 4).map(function (k) { return "<span>" + k + " <b>" + pct(st.mc.winners[k]) + "</b></span>"; }).join("");
+    $("winners").innerHTML = "<span>First to the threshold:</span>" + (w || "<span>nobody</span>");
+    drawHist();
+  }
+
+  function drawHist() {
+    var svg = $("hist"); clear(svg);
+    var ys = st.mc.years, runs = st.mc.runs, W = 420, Ht = 200, m = { l: 34, r: 8, t: 12, b: 26 };
+    var start = Math.floor(SPEC.defaults.start_year), end = start + 20;
+    var bins = {}, maxB = 0;
+    ys.forEach(function (y) { var b = Math.floor(y); bins[b] = (bins[b] || 0) + 1; if (bins[b] > maxB) maxB = bins[b]; });
+    var lo = start, hi = Math.min(end, Math.max(start + 8, (ys.length ? Math.floor(ys[ys.length - 1]) : start) + 1));
+    var nb = hi - lo + 1, bw = (W - m.l - m.r) / nb;
+    var top = Math.max(0.1, Math.ceil(maxB / runs * 10) / 10), tick = top > 0.5 ? 0.2 : 0.1;
+    var Y = function (v) { return Ht - m.b - v / top * (Ht - m.t - m.b); };
+    var axis = el("g", { "class": "axis" }, svg), grid = el("g", { "class": "grid" }, svg);
+    for (var t = 0; t <= top + 1e-9; t += tick) {
+      el("line", { x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t) }, grid);
+      el("text", { x: m.l - 5, y: Y(t) + 3.5, "text-anchor": "end" }, axis, pct(t));
+    }
+    for (var b = lo; b <= hi; b++) {
+      var f = (bins[b] || 0) / runs, x = m.l + (b - lo) * bw;
+      if (f > 0) el("rect", { x: x + 2, y: Y(f), width: Math.max(1, bw - 4), height: Ht - m.b - Y(f), fill: "var(--accent)", rx: 1.5 }, svg).appendChild(el("title", {}, null, b + ": " + pct(f, 1)));
+      if (nb <= 12 || (b - lo) % 2 === 0) el("text", { x: x + bw / 2, y: Ht - m.b + 15, "text-anchor": "middle" }, axis, String(b).slice(nb > 8 ? 2 : 0));
+    }
+  }
+
+  // ------------------------------------------------------------ sweep
+  function runSweep() {
+    var key = $("sweepParam").value, spec = null;
+    LEVERS.forEach(function (g) { g.items.forEach(function (it) { if (it[0] === key) spec = it; }); });
+    var vals = [];
+    for (var k = 0; k <= 10; k++) vals.push(spec[2] + (spec[3] - spec[2]) * k / 10);
+    $("sweepBtn").textContent = "Running…";
+    $("sweep").classList.add("busy");
+    var out = [], k2 = 0;
+    (function next() {
+      if (k2 >= vals.length) {
+        st.sweep = { key: key, label: spec[1], rows: out };
+        $("sweepBtn").textContent = "Run sweep"; $("sweep").classList.remove("busy");
+        drawSweep(); return;
+      }
+      var cfg = JSON.parse(JSON.stringify(st.cfg)); cfg.params[key] = vals[k2];
+      var r = PS.runMany(cfg, 300, 1); r.value = vals[k2]; out.push(r); k2++;
+      setTimeout(next, 0);
+    })();
+  }
+
+  function drawSweep() {
+    var svg = $("sweep"); clear(svg);
+    var W = 1100, Ht = 300, m = { l: 44, r: 16, t: 14, b: 40 };
+    var Y = function (v) { return Ht - m.b - v * (Ht - m.t - m.b); };
+    var grid = el("g", { "class": "grid" }, svg), axis = el("g", { "class": "axis" }, svg);
+    for (var v = 0; v <= 1.0001; v += 0.25) {
+      el("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v) }, grid);
+      el("text", { x: m.l - 6, y: Y(v) + 3.5, "text-anchor": "end" }, axis, pct(v));
+    }
+    if (!st.sweep) {
+      el("text", { x: W / 2, y: Ht / 2, "text-anchor": "middle", "class": "lbl", style: "font-size:12px" }, svg, "Pick a lever and run the sweep to see how outcomes respond.");
+      return;
+    }
+    var rows = st.sweep.rows, lo = rows[0].value, hi = rows[rows.length - 1].value;
+    var X = function (v) { return m.l + (v - lo) / (hi - lo) * (W - m.l - m.r); };
+    rows.forEach(function (r, i) { if (i % 2 === 0) el("text", { x: X(r.value), y: Ht - m.b + 16, "text-anchor": "middle" }, axis, fmtParam(st.sweep.key, r.value)); });
+    el("text", { x: (m.l + W - m.r) / 2, y: Ht - 4, "text-anchor": "middle", "class": "lbl", style: "fill:var(--ink)" }, svg, st.sweep.label);
+    var series = [
+      ["var(--cat)", function (r) { return r.share.catastrophe + r.share.unsafe_arrival; }, "none"],
+      ["var(--coop)", function (r) { return r.share.safe_coordinated; }, "5 4"],
+      ["var(--accent)", function (r) { return r.p_good; }, "none"]
+    ];
+    series.forEach(function (s) {
+      el("polyline", { points: rows.map(function (r) { return X(r.value) + "," + Y(s[1](r)); }).join(" "), fill: "none", stroke: s[0], "stroke-width": 2.4, "stroke-dasharray": s[2], "stroke-linejoin": "round" }, svg);
+      rows.forEach(function (r) { el("circle", { cx: X(r.value), cy: Y(s[1](r)), r: 2.6, fill: s[0] }, svg); });
+    });
+    var cur = st.cfg.params[st.sweep.key];
+    if (cur >= lo && cur <= hi) {
+      el("line", { x1: X(cur), x2: X(cur), y1: m.t, y2: Ht - m.b, stroke: "var(--ink)", "stroke-dasharray": "2 3" }, svg);
+      el("text", { x: X(cur) + 5, y: m.t + 10, "class": "lbl", style: "fill:var(--ink)" }, svg, "now " + fmtParam(st.sweep.key, cur));
+    }
+  }
+
+  // ------------------------------------------------------------ playback & wiring
+  function stop() { if (st.playing) { clearInterval(st.playing); st.playing = null; $("play").textContent = "Play"; } }
+  function play() {
+    if (st.playing) { stop(); return; }
+    if (st.idx >= st.sim.history.length - 1) st.idx = 0;
+    $("play").textContent = "Pause";
+    st.playing = setInterval(function () {
+      st.idx++; $("scrub").value = st.idx; drawFrame();
+      if (st.idx >= st.sim.history.length - 1) stop();
+    }, 170);
+  }
+  function rerun() { stop(); runSingle(); runMC(); drawSweep(); }
+  var rerunSoon = debounce(rerun, 220);
+
+  function computeScenarioOdds() {
+    var ids = SPEC.scenarios.map(function (s) { return s.id; }), k = 0;
+    (function next() {
+      if (k >= ids.length) return;
+      st.scenOdds[ids[k]] = PS.runMany(PS.build(SPEC, ids[k]), 600, 1).p_good;
+      k++; renderScenarios(); setTimeout(next, 0);
+    })();
+  }
+
+  $("play").addEventListener("click", play);
+  $("scrub").addEventListener("input", function () { stop(); st.idx = parseInt(this.value, 10); drawFrame(); });
+  $("seed").addEventListener("change", function () { stop(); runSingle(); });
+  $("newSeed").addEventListener("click", function () { $("seed").value = 1 + Math.floor(Math.random() * 99999); stop(); runSingle(); });
+  $("reveal").addEventListener("change", drawNet);
+  $("runs").addEventListener("change", runMC);
+  $("sweepBtn").addEventListener("click", runSweep);
+  $("resetActors").addEventListener("click", function () { st.cfg.actors = JSON.parse(JSON.stringify(st.base.actors)); renderActors(); rerun(); });
+  var sel = $("sweepParam");
+  SWEEPS.forEach(function (key) {
+    LEVERS.forEach(function (g) { g.items.forEach(function (it) { if (it[0] === key) { var o = document.createElement("option"); o.value = key; o.textContent = it[1]; sel.appendChild(o); } }); });
+  });
+
+  selectScenario("status_quo");
+  setTimeout(computeScenarioOdds, 30);
+})();
+</script>
+
+</body>
+</html>
