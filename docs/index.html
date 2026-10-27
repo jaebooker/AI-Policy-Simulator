@@ -166,6 +166,12 @@ details summary { cursor: pointer; font-family: var(--display); font-weight: 700
 details[open] summary { margin-bottom: 14px; }
 .busy { opacity: .55; transition: opacity .2s; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.fund-support{padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--panel);margin-top:24px}
+.fund-support h2{margin:0 0 10px}.fund-support p{max-width:70ch;color:var(--muted)}
+.fund-support-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.fund-donate{display:inline-block;padding:10px 16px;background:var(--ink);color:var(--bg);border-radius:6px;text-decoration:none;font-weight:600}
+.fund-donate:hover{opacity:.85}
 </style>
 
 <div class="wrap">
@@ -328,6 +334,16 @@ details[open] summary { margin-bottom: 14px; }
       <p class="note" style="margin-top:14px">Model and source code: <a href="https://github.com/jaebooker/AI-Policy-Simulator" target="_blank" rel="noopener">github.com/jaebooker/AI-Policy-Simulator</a>. All outputs are conditional on stylized assumptions; use them to compare levers, not as forecasts.</p>
     </details>
   </section>
+  <section class="fund-support" aria-labelledby="fund-support-heading">
+    <h2 id="fund-support-heading">Support AI safety research</h2>
+    <p>AI Policy Simulator is a sponsored project of the <a href="https://www.aisafetyfund.org/research" target="_blank" rel="noopener noreferrer">AI Safety Research Fund</a>.</p>
+    <p>Help fund research into making advanced AI safe and aligned.</p>
+    <div class="fund-support-links">
+      <a class="fund-donate" href="https://www.paypal.com/donate/?hosted_button_id=HBL3KAAMDNGTW" target="_blank" rel="noopener noreferrer">Donate via PayPal ↗</a>
+      <a href="https://www.aisafetyfund.org/research" target="_blank" rel="noopener noreferrer">Research we support ↗</a>
+    </div>
+  </section>
+
 </div>
 
 <script src="model.js"></script>
